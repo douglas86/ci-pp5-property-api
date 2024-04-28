@@ -2,7 +2,7 @@
 name: Bug report
 about: I have found a bug that I want to report.
 title: 'Bug: <title>'
-labels: bug
+labels: API, bug
 assignees: douglas86
 
 ---

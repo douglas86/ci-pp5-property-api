@@ -8,3 +8,9 @@ assignees: douglas86
 ---
 
 As a **role** I want to **goal/achievement**.
+
+**Acceptance Criteria**
+
+- AC 1: criteria
+- AC 2: criteria
+- AC 3: criteria
