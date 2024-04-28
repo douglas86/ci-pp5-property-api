@@ -1,4 +1,5 @@
 from adrf.viewsets import ViewSet
+from rest_framework.response import Response
 
 
 class PropertyListView(ViewSet):

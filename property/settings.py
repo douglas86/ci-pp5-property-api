@@ -61,6 +61,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
+
+    'Profile',
 ]
 
 MIDDLEWARE = [
@@ -73,6 +75,20 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
 ]
+
+if LOCALHOST == 'True':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+    # INSTALLED_APPS.append('django_browser_reload')
+    # MIDDLEWARE.append("django_browser_reload.middleware.BrowserReloadMiddleware")
+else:
+    DATABASES = {
+        'default': dj_database_url.parse(os.environ.get('DJANGO_DATABASE_URL'))
+    }
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [(
@@ -110,19 +126,6 @@ ASGI_APPLICATION = 'property.asgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-if LOCALHOST == 'True':
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-    INSTALLED_APPS.append('django_browser_reload')
-    MIDDLEWARE.append("django_browser_reload.middleware.BrowserReloadMiddleware")
-else:
-    DATABASES = {
-        'default': dj_database_url.parse(os.environ.get('DJANGO_DATABASE_URL'))
-    }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
