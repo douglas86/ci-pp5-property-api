@@ -34,5 +34,5 @@ urlpatterns = [
     path('profiles/', include('Profile.urls')),
 ]
 
-# if LOCALHOST == 'True':
-#     urlpatterns.append(path("__reload__/", include("django_browser_reload.urls")))
+if LOCALHOST == 'True':
+    urlpatterns.append(path("__reload__/", include("django_browser_reload.urls")))

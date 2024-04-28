@@ -9,9 +9,10 @@ from Profile.models import Profile
 # Create your views here.
 class ProfileView(ViewSet):
     model = Profile
+    message = 'Hello, World!'
 
     async def list(self, request):
-        return Response("Hello")
+        return Response({'message': self.message})
 
     async def retrieve(self, request):
         user = await self.model.objects.all()
