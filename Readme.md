@@ -16,3 +16,18 @@ You can buy, rent, submit complaints or report maintenance issues.
 You will also be able to see what maintenance contractor has been assigned to your maintenance issue.
 
 ---
+
+[//]: # (Badges)
+
+![Django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=green)
+![Daphne](https://img.shields.io/badge/daphne-092E20?style=for-the-badge&logo=django&logoColor=green)
+![Django Rest Framework](https://img.shields.io/badge/django%20rest-ff1709?style=for-the-badge&logo=django&logoColor=white)
+![Sqlite](https://img.shields.io/badge/Sqlite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+![Pycharm](https://img.shields.io/badge/PyCharm-000000.svg?&style=for-the-badge&logo=PyCharm&logoColor=white)
+![Figma](https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)
+
+---
+
+[//]: # (Table of content)
+
+___
