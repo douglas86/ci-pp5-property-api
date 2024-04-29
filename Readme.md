@@ -25,9 +25,48 @@ You will also be able to see what maintenance contractor has been assigned to yo
 ![Sqlite](https://img.shields.io/badge/Sqlite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
 ![Pycharm](https://img.shields.io/badge/PyCharm-000000.svg?&style=for-the-badge&logo=PyCharm&logoColor=white)
 ![Figma](https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)
+![Heroku](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white)
 
 ---
 
-[//]: # (Table of content)
+## Table of content
+
+- [Planning](#planning)
+    - [ERD diagrams for mapping out my models](#erd-diagrams-for-mapping-out-my-models)
+    - [User Stories using MOSCOW Prioritization techniques](#user-stories-using-moscow-prioritization-techniques)
+    - [A Proper Description of the Technologies used in this API](#a-proper-description-of-the-technologies-used-in-the-api)
+    - [Description of how the code is organized](#description-of-how-the-code-is-organized)
+- [Features](#features)
+- [Testing](#testing)
+- [Bugs](#bugs)
+- [Credits](#credits)
 
 ___
+
+### [Planning](#planning)
+
+#### [ERD diagrams for mapping out my models](#erd-diagrams-for-mapping-out-my-models)
+
+#### [User Stories using MOSCOW Prioritization techniques](#user-stories-using-moscow-prioritization-techniques)
+
+#### [A Proper Description of the Technologies used in the API](#a-proper-description-of-the-technologies-used-in-the-api)
+
+#### [Description of how the code is organized](#description-of-how-the-code-is-organized)
+
+---
+
+### [Features](#features)
+
+---
+
+### [Testing](#testing)
+
+---
+
+### [Bugs](#bugs)
+
+---
+
+### [Credits](#credits)
+
+---
