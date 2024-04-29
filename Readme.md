@@ -19,11 +19,14 @@ You will also be able to see what maintenance contractor has been assigned to yo
 
 [//]: # (Badges)
 
-![Django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=green)
-![Daphne](https://img.shields.io/badge/daphne-092E20?style=for-the-badge&logo=django&logoColor=green)
-![Django Rest Framework](https://img.shields.io/badge/django%20rest-ff1709?style=for-the-badge&logo=django&logoColor=white)
-![Sqlite](https://img.shields.io/badge/Sqlite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+![Pop OS](https://img.shields.io/badge/Pop!_OS-48B9C7?style=for-the-badge&logo=Pop!_OS&logoColor=white)
 ![Pycharm](https://img.shields.io/badge/PyCharm-000000.svg?&style=for-the-badge&logo=PyCharm&logoColor=white)
+![Google Chrome](https://img.shields.io/badge/Google_chrome-4285F4?style=for-the-badge&logo=Google-chrome&logoColor=white)
+![Django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=green)
+![Django Rest Framework](https://img.shields.io/badge/django%20rest-ff1709?style=for-the-badge&logo=django&logoColor=white)
+![Daphne](https://img.shields.io/badge/daphne-092E20?style=for-the-badge&logo=django&logoColor=green)
+![Sqlite](https://img.shields.io/badge/Sqlite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+![postgres](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 ![Figma](https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)
 ![Heroku](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white)
 
@@ -37,6 +40,7 @@ You will also be able to see what maintenance contractor has been assigned to yo
     - [A Proper Description of the Technologies used in this API](#a-proper-description-of-the-technologies-used-in-the-api)
     - [Description of how the code is organized](#description-of-how-the-code-is-organized)
 - [Features](#features)
+  - [async/await](#asyncawait) 
 - [Testing](#testing)
 - [Bugs](#bugs)
 - [Credits](#credits)
@@ -51,22 +55,39 @@ ___
 
 #### [A Proper Description of the Technologies used in the API](#a-proper-description-of-the-technologies-used-in-the-api)
 
-#### [Description of how the code is organized](#description-of-how-the-code-is-organized)
+- Pop Os is a Linux distribution from System76 that I use for development
+- Pycharm was used as my IDE as it gives me better features to be more productive
+- Django was used as my Backend framework
+- Django Rest Framework was used in conjunction with Django to write this API
+- Daphne was used to add async/await to my API design
+- Sqlite was used as my local database when I was developing locally
+- Postgres was used in conjunction with heroku for an online database
+- Figma was used to design my ERD diagram
+- Heroku was used as my cloud provider
+
+#### [Description of how the code is organized](#table-of-content)
 
 ---
 
-### [Features](#features)
+### [Features](#table-of-content)
+
+#### [async/await](#features)
+
+- I was able to get async / await right in this project
+- With the help of a Package called [daphne](https://pypi.org/project/daphne/)
+- I also needed to use a Package called [adrf](https://pypi.org/project/adrf/) for async/await views
+- If you want to find out how I set up django for async / await, click [here](https://docs.google.com/document/d/1f-XpQLNI51lp_32UEDDWBoK9GzG8L_m7pP11FSGgwPs/edit#heading=h.cbds7u507bkn)
 
 ---
 
-### [Testing](#testing)
+### [Testing](#table-of-content)
 
 ---
 
-### [Bugs](#bugs)
+### [Bugs](#table-of-content)
 
 ---
 
-### [Credits](#credits)
+### [Credits](#table-of-content)
 
 ---
