@@ -96,13 +96,13 @@ if LOCALHOST == 'True':
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
-    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = ['rest_framework.renderers.JSONRenderer']
     INSTALLED_APPS.append('django_browser_reload')
     MIDDLEWARE.append("django_browser_reload.middleware.BrowserReloadMiddleware")
 else:
     DATABASES = {
         'default': dj_database_url.parse(os.environ.get('DJANGO_DATABASE_URL'))
     }
+    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = ['rest_framework.renderers.JSONRenderer']
 
 ROOT_URLCONF = 'property.urls'
 
