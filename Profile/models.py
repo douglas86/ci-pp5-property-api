@@ -21,9 +21,10 @@ class Profile(models.Model):
         return f"{str(self.user)}'s Profile"
 
 
-def create_user_profile(instance, created):
+def create_user_profile(sender, instance, created, **kwargs):
     """
     Creates new user profile once a User object is created
+    :param sender:
     :param instance:
     :param created:
     :return:
