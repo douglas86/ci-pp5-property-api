@@ -16,6 +16,8 @@ class ProfileList(APIView):
     """
 
     model = Profile
+    # when setting this variable, only logged-in user can access view
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request):
         profile = self.model.objects.all()
