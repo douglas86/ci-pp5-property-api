@@ -5,21 +5,19 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authtoken.admin import User
 
-from Profile.models import Profile
-from Profile.serializers import ProfileSerializer
+from .models import Profile
+from .serializers import ProfileSerializer
 
 
 # Create your views here.
-class ProfileView(APIView):
+class ProfileList(APIView):
     """
     This view is used for displaying profile information
     """
 
     model = Profile
-    serializer_class = ProfileSerializer
-    authentication_classes = (TokenAuthentication, SessionAuthentication)
-    permission_classes = (IsAuthenticated,)
 
     def get(self, request):
-        user = [user for user in self.model.objects.filter(user=request.user)]
-        return Response(user)
+        profile = self.model.objects.all()
+        serializer = ProfileSerializer(profile, many=True)
+        return Response(serializer.data)

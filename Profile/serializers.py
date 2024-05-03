@@ -1,11 +1,11 @@
 from rest_framework import serializers
 
-from Profile.models import Profile
+from .models import Profile
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    snippets = serializers.ReadOnlyField(source='user.username')
+    user = serializers.ReadOnlyField(source='user.username')
 
     class Meta:
         model = Profile
-        fields = ['user', 'profile_picture']
+        fields = ['id', 'user', 'profile_picture', 'created_at', 'updated_at']
