@@ -16,16 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-# from rest_framework import routers
 
 from .views import PropertyListView
 from .settings import LOCALHOST
 
-# router = routers.DefaultRouter()
-# router.register(r"async_viewset", views.PropertyListView, basename="async_viewset")
-
 urlpatterns = [
-    path("", PropertyListView.as_view({'get': 'list'}), name="property_list"),
+    path("", PropertyListView.as_view(), name="property_list"),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('dj-rest-auth/', include('dj_rest_auth.urls')),

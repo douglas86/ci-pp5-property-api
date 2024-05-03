@@ -1,11 +1,9 @@
-from adrf.viewsets import ViewSet
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 
-class PropertyListView(ViewSet):
-    message = 'This is the async list method of the PropertyListView'
+class PropertyListView(APIView):
+    message = 'This is the home view'
 
-    async def list(self, request):
-        return Response({
-            'message': self.message
-        })
+    def get(self, request):
+        return Response({'message': self.message})
