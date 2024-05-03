@@ -27,7 +27,7 @@ urlpatterns = [
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
     path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
 
-    path('', include('Profile.urls')),
+    path('profiles/', include('Profile.urls')),
 ]
 
 if LOCALHOST == 'True':
