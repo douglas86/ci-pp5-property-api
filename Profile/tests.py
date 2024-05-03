@@ -44,6 +44,8 @@ class TestUser(TestCase):
         :return:
         """
 
+        print('Registering user')
+
         response = self.register_user()
         self.assertEqual(response.status_code, 201)
 
@@ -54,10 +56,22 @@ class TestUser(TestCase):
         :return:
         """
 
+        print('Login user')
+
         user = self.login_user()
         self.assertEqual(user.status_code, 200)
 
     def test_logout(self):
+        print('Logout user')
+
         self.login_user()
         response = self.client.post('/dj-rest-auth/logout/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_change_password(self):
+        print('Change password')
+        self.register_user()
+        response = self.client.post('/profiles/change_password/',
+                                    {'old_password': 'IAMininGLOrN', 'new_password': 'ininGLOrN',
+                                     })
         self.assertEqual(response.status_code, 200)
