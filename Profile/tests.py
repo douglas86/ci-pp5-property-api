@@ -16,6 +16,26 @@ class TestUser(TestCase):
 
         self.client = Client()
 
+    def register_user(self):
+        """
+        Register user
+        :return:
+        """
+
+        response = self.client.post('/dj-rest-auth/registration/',
+                                    {'username': 'test', 'password1': 'IAMininGLOrN', 'password2': 'IAMininGLOrN'})
+        return response
+
+    def login_user(self):
+        """
+        Login user
+        :return:
+        """
+
+        self.register_user()
+        user = self.client.post('/dj-rest-auth/login/', {'username': 'test', 'password': 'IAMininGLOrN'})
+        return user
+
     def test_register(self):
         """
         Test if user can register user
@@ -24,6 +44,15 @@ class TestUser(TestCase):
         :return:
         """
 
-        response = self.client.post('/dj-rest-auth/registration/',
-                                    {'username': 'test', 'password1': 'IAMininGLOrN', 'password2': 'IAMininGLOrN'})
+        response = self.register_user()
         self.assertEqual(response.status_code, 201)
+
+    def test_login(self):
+        """
+        Test if user can log in
+        Check if http status code is 200
+        :return:
+        """
+
+        user = self.login_user()
+        self.assertEqual(user.status_code, 200)
