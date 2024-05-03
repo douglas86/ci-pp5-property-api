@@ -56,3 +56,8 @@ class TestUser(TestCase):
 
         user = self.login_user()
         self.assertEqual(user.status_code, 200)
+
+    def test_logout(self):
+        self.login_user()
+        response = self.client.post('/dj-rest-auth/logout/')
+        self.assertEqual(response.status_code, 200)
