@@ -14,7 +14,10 @@ class StocksCreateView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
 
     def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+        if serializer.is_valid():
+            serializer.save(owner=self.request.user)
+            return Response({message: "You have successfully saved a new property"}, status=status.HTTP_201_CREATED)
+        return Response({message: "There was an error saving to database"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 # Read
