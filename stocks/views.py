@@ -5,6 +5,15 @@ from .models import Stocks
 
 
 # Create your views here.
+# Create
+class StocksCreateView(APIView):
+    model = Stocks
+
+    def post(self, request):
+        return Response("Hello World")
+
+
+# Read
 class StocksList(APIView):
     model = Stocks
 
