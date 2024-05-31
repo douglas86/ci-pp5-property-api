@@ -16,12 +16,6 @@ class StocksCreateView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
-    # def get_serializer_context(self):
-    #     context = super().get_serializer_context()
-    #     context.update({'request': self.request})
-    #
-    #     return context
-
 
 # Read
 class StocksList(APIView):
