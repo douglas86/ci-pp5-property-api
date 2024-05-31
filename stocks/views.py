@@ -13,11 +13,14 @@ class StocksCreateView(generics.ListCreateAPIView):
     queryset = Stocks.objects.all()
     permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
 
-    def get_serializer_context(self):
-        context = super().get_serializer_context()
-        context.update({'request': self.request})
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
-        return context
+    # def get_serializer_context(self):
+    #     context = super().get_serializer_context()
+    #     context.update({'request': self.request})
+    #
+    #     return context
 
 
 # Read
