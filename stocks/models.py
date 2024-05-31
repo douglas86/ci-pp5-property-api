@@ -1,10 +1,10 @@
 from django.db import models
-from Profile.models import Profile
+from django.contrib.auth.models import User
 
 
 # Create your models here.
 class Stocks(models.Model):
-    product = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     property_image = models.ImageField(upload_to='images/', default='../default_profile_rkmhff')
     property_address = models.CharField(max_length=100)
     property_area = models.CharField(max_length=100)
