@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework import permissions, generics, status
 from rest_framework.views import APIView, Response
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Stocks
 from .serilizers import StockSerializer
@@ -8,7 +9,7 @@ from .serilizers import StockSerializer
 
 # Create your views here.
 # Create
-class StocksCreateView(generics.ListCreateAPIView):
+class StocksCreateView(LoginRequiredMixin, generics.ListCreateAPIView):
     serializer_class = StockSerializer
     queryset = Stocks.objects.all()
     permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
