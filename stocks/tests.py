@@ -1,43 +1,116 @@
+import io
+
+from django.contrib.auth.models import User
 from django.test import TestCase, Client
+from rest_framework import status
+from rest_framework.test import APITestCase
+from django.core.files.uploadedfile import SimpleUploadedFile
+
 from Profile.tests import TestUser
+from .models import Stocks
+import io
+from PIL import Image
+
+
+def get_temporary_image():
+    """
+    Creates a temporary image and returns it.
+    :return:
+    """
+    image = Image.new('RGB', (100, 100))
+    temp_image = io.BytesIO()
+    image.save(temp_image, format='JPEG')
+    temp_image.seek(0)
+    return temp_image
 
 
 # Create your tests here.
-class TestStocks(TestCase):
+class TestStocks(APITestCase):
     """
     Test if only the admin can create a Property on the site
     """
 
     def setUp(self):
         """
-        Set up the client for the test database
+        create new users for testing
         :return:
         """
 
-        self.client = Client()
+        # create admin and user
+        self.admin_user = User.objects.create_superuser(username='admin', password='IAMininGLOrN')
+        self.regular_user = User.objects.create_user(username='user', password='IAMininGLOrN')
+        self.temp_image = get_temporary_image()
+        self.url = '/stocks/create/'
 
-    def register_user(self):
+    def image(self):
         """
-        Register a new user with a role as user
+        temporary image
         :return:
         """
 
-        response = self.client.post('/dj-rest-auth/registration/',
-                                    {'username': 'test', 'password1': 'IAMininGLOrN', 'password2': 'IAMininGLOrN',
-                                     'role': 'user'})
+        image_file = SimpleUploadedFile('temp_image.jpg', self.temp_image.read(), content_type='image/jpeg')
+        return image_file
 
-        return response
+    def posting_data(self):
+        data = {
+            "owner": self.admin_user.id,
+            "property_image": self.image,
+            "property_address": "7 - 11 High Street, Reigate",
+            "property_area": "Reigate",
+            "area_code": "RH29AA",
+            "rent": 700,
+            "created_at": "2024-02-15T13:20:30+03:00",
+            "updated_at": "2024-02-15T13:20:30+03:00"
+        }
 
-    def login_user(self):
-        self.register_user()
-        user = self.client.post('/dj-rest-auth/login/', {'username': 'test', 'password': 'IAMininGLOrN'})
-        return user
+        return data
 
-    def test_create_property(self):
+    def response(self):
+        response = self.client.post(self.url, data=self.posting_data(), format='multipart')
+        return response.status_code
+
+    def test_cannot_create_property(self):
         """
-        Testing if I can create a Property
+        Test that if you are not logged in, you cannot create a property
         :return:
         """
 
-        response = self.register_user()
-        self.assertEqual(response.status_code, 201)
+        self.assertEqual(self.response(), status.HTTP_403_FORBIDDEN)
+
+    def test_not_admin(self):
+        """
+        Test that if you are logged in and not the admin
+        You cannot create a property
+        :return:
+        """
+
+        response = self.client.post(self.url, data=self.posting_data(), format='multipart')
+
+    # def test_logged_in_user_can_create_property(self):
+    #     """
+    #     Test if a user can create a Property
+    #     :return:
+    #     """
+    #     self.client.login(username='user', password='IAMininGLOrN')
+    #
+    #     temp_image = get_temporary_image()
+    #     image_file = SimpleUploadedFile("temp_image.jpg", temp_image.read(), content_type="image/jpeg")
+    #
+    #     url = '/stocks/create/'
+    #
+    #     data = {
+    #         "owner": self.admin_user.id,
+    #         "property_image": image_file,
+    #         "property_address": "7 - 11 High Street, Reigate",
+    #         "property_area": "Reigate",
+    #         "area_code": "RH29AA",
+    #         "rent": 700,
+    #         "created_at": "2024-02-15T13:20:30+03:00",
+    #         "updated_at": "2024-02-15T13:20:30+03:00"
+    #     }
+    #
+    #     response = self.client.post(url, data, format='multipart')
+    #
+    #     self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+    #     self.assertEqual(Stocks.objects.count(), 1)
+    #     self.assertEqual(Stocks.objects.get().owner, self.admin_user)

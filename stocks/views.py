@@ -9,7 +9,7 @@ from .serilizers import StockSerializer
 
 # Create your views here.
 # Create
-class StocksCreateView(LoginRequiredMixin, generics.ListCreateAPIView):
+class StocksCreateView(generics.ListCreateAPIView):
     serializer_class = StockSerializer
     queryset = Stocks.objects.all()
     permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
@@ -17,8 +17,8 @@ class StocksCreateView(LoginRequiredMixin, generics.ListCreateAPIView):
     def perform_create(self, serializer):
         if serializer.is_valid():
             serializer.save(owner=self.request.user)
-            return Response({message: "You have successfully saved a new property"}, status=status.HTTP_201_CREATED)
-        return Response({message: "There was an error saving to database"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response("You have successfully saved a new property", status=status.HTTP_201_CREATED)
+        return Response("There was an error saving to database", status=status.HTTP_400_BAD_REQUEST)
 
 
 # Read
