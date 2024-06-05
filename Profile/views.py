@@ -28,6 +28,10 @@ class ProfileList(APIView):
         return Response(serializer.data)
 
 
+class ProfileDetail(APIView):
+    model = Profile
+
+
 class ChangePassword(APIView):
     """
     This view is used for changing passwords
