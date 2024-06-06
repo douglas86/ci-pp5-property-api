@@ -6,10 +6,23 @@ from .models import Profile
 
 class ProfileSerializer(Serializer):
     user = serializers.ReadOnlyField(source='user.username')
+    profile_picture = serializers.SerializerMethodField()
+    role = serializers.SerializerMethodField()
+    created_at = serializers.ReadOnlyField()
+    updated_at = serializers.ReadOnlyField()
 
-    class Meta:
-        model = Profile
-        fields = ['id', 'user', 'profile_picture', 'created_at', 'updated_at']
+    def get_profile_picture(self, obj):
+        return obj.profile_picture.url
+
+    def get_role(self, obj):
+        if obj.user.is_superuser:
+            return "admin"
+        else:
+            return obj.role
+
+    # class Meta:
+    #     model = Profile
+    #     fields = ['id', 'user', 'profile_picture', 'created_at', 'updated_at']
 
 
 # class ProfileSerializer(serializers.ModelSerializer):
