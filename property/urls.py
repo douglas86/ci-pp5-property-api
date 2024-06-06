@@ -16,20 +16,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework import routers
 
 from .views import PropertyListView
 from .settings import LOCALHOST
 
-urlpatterns = [
-    path("", PropertyListView.as_view(), name="property_list"),
-    path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
-    path('dj-rest-auth/', include('dj_rest_auth.urls')),
-    path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
+router = routers.DefaultRouter()
+router.register(r"async_viewset", PropertyListView, basename="property_list")
 
-    path('', include('Profile.urls')),
-    path('stocks/', include('stocks.urls')),
+urlpatterns = [
+    path("", include(router.urls)),
+    # path('admin/', admin.site.urls),
+    # path('api-auth/', include('rest_framework.urls')),
+    # path('dj-rest-auth/', include('dj_rest_auth.urls')),
+    # path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
+
+    # path('', include('Profile.urls')),
+    # path('stocks/', include('stocks.urls')),
 ]
 
-if LOCALHOST == 'True':
-    urlpatterns.append(path("__reload__/", include("django_browser_reload.urls")))
+# if LOCALHOST == 'True':
+#     urlpatterns.append(path("__reload__/", include("django_browser_reload.urls")))

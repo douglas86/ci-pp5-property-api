@@ -107,8 +107,8 @@ if LOCALHOST == 'True':
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
-    INSTALLED_APPS.append('django_browser_reload')
-    MIDDLEWARE.append("django_browser_reload.middleware.BrowserReloadMiddleware")
+    # INSTALLED_APPS.append('django_browser_reload')
+    # MIDDLEWARE.append("django_browser_reload.middleware.BrowserReloadMiddleware")
 else:
     DATABASES = {
         'default': dj_database_url.parse(os.environ.get('DJANGO_DATABASE_URL'))
