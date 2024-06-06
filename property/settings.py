@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'cloudinary',
+    'adrf',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
