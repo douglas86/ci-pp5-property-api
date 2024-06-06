@@ -5,6 +5,10 @@ from .models import Profile
 
 
 class ProfileSerializer(Serializer):
+    """
+    Serializer class for a Profile model.
+    """
+
     user = serializers.ReadOnlyField(source='user.username')
     profile_picture = serializers.SerializerMethodField()
     role = serializers.SerializerMethodField()
@@ -12,25 +16,25 @@ class ProfileSerializer(Serializer):
     updated_at = serializers.ReadOnlyField()
 
     def get_profile_picture(self, obj):
+        """
+        Get Profile URL from a database
+        :param obj:
+        :return:
+        """
+
         return obj.profile_picture.url
 
     def get_role(self, obj):
+        """
+        Returns the role of a user if it is a superuser or not
+        :param obj:
+        :return:
+        """
+
         if obj.user.is_superuser:
             return "admin"
         else:
             return obj.role
-
-    # class Meta:
-    #     model = Profile
-    #     fields = ['id', 'user', 'profile_picture', 'created_at', 'updated_at']
-
-
-# class ProfileSerializer(serializers.ModelSerializer):
-#     user = serializers.ReadOnlyField(source='user.username')
-#
-#     class Meta:
-#         model = Profile
-#         fields = ['id', 'user', 'profile_picture', 'created_at', 'updated_at']
 
 
 class ChangePasswordSerializer(serializers.Serializer):

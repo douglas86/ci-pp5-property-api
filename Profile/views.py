@@ -38,25 +38,6 @@ class ProfileView(ViewSet):
         return Response(serializer.data)
 
 
-# class ProfileList(APIView):
-#     """
-#     This view is used for displaying profile information
-#     """
-#
-#     model = Profile
-#     # when setting this variable, only logged-in user can access view
-#     permission_classes = (IsAuthenticated,)
-#
-#     def get(self, request):
-#         profile = self.model.objects.all()
-#         serializer = ProfileSerializer(profile, many=True)
-#         return Response(serializer.data)
-
-
-class ProfileDetail(APIView):
-    model = Profile
-
-
 class ChangePassword(APIView):
     """
     This view is used for changing passwords
