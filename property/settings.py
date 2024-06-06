@@ -50,6 +50,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -172,7 +173,7 @@ TEMPLATES = [
 ]
 
 SITE_ID = 1
-WSGI_APPLICATION = 'property.wsgi.application'
+ASGI_APPLICATION = 'property.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
