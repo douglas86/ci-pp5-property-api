@@ -18,21 +18,21 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
-from .views import PropertyListView
+from .views import HomeView
 from .settings import LOCALHOST
 
 router = routers.DefaultRouter()
-router.register(r"async_viewset", PropertyListView, basename="property_list")
+router.register("", HomeView, basename="property_list")
 
 urlpatterns = [
     path("", include(router.urls)),
-    # path('admin/', admin.site.urls),
-    # path('api-auth/', include('rest_framework.urls')),
-    # path('dj-rest-auth/', include('dj_rest_auth.urls')),
-    # path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
+    path('admin/', admin.site.urls),
+    path('api-auth/', include('rest_framework.urls')),
+    path('dj-rest-auth/', include('dj_rest_auth.urls')),
+    path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
 
-    # path('', include('Profile.urls')),
-    # path('stocks/', include('stocks.urls')),
+    path('', include('Profile.urls')),
+    path('stocks/', include('stocks.urls')),
 ]
 
 # if LOCALHOST == 'True':
