@@ -1,14 +1,23 @@
 from rest_framework import serializers
+from adrf.serializers import Serializer
 
 from .models import Profile
 
 
-class ProfileSerializer(serializers.ModelSerializer):
+class ProfileSerializer(Serializer):
     user = serializers.ReadOnlyField(source='user.username')
 
     class Meta:
         model = Profile
         fields = ['id', 'user', 'profile_picture', 'created_at', 'updated_at']
+
+
+# class ProfileSerializer(serializers.ModelSerializer):
+#     user = serializers.ReadOnlyField(source='user.username')
+#
+#     class Meta:
+#         model = Profile
+#         fields = ['id', 'user', 'profile_picture', 'created_at', 'updated_at']
 
 
 class ChangePasswordSerializer(serializers.Serializer):

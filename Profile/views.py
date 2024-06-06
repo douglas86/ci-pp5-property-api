@@ -1,3 +1,5 @@
+import asyncio
+
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.shortcuts import render
@@ -7,25 +9,48 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authtoken.admin import User
+from adrf.viewsets import ViewSet
+from asgiref.sync import async_to_sync
 
 from .models import Profile
 from .serializers import ProfileSerializer, ChangePasswordSerializer
 
 
 # Create your views here.
-class ProfileList(APIView):
-    """
-    This view is used for displaying profile information
-    """
-
+class ProfileView(ViewSet):
     model = Profile
-    # when setting this variable, only logged-in user can access view
-    permission_classes = (IsAuthenticated,)
+    serializer_class = ProfileSerializer
+    authentication_classes = (TokenAuthentication, SessionAuthentication)
 
-    def get(self, request):
-        profile = self.model.objects.all()
-        serializer = ProfileSerializer(profile, many=True)
+    async def async_generator(self):
+        profiles = self.model.objects.all()
+
+        yield profiles
+
+    async def async_coroutine(self):
+        async for profile in self.async_generator():
+            return profile
+
+    def retrieve(self, request):
+        data = asyncio.run(self.async_coroutine())
+        serializer = ProfileSerializer(data, many=True, context={'request', request})
+
         return Response(serializer.data)
+
+
+# class ProfileList(APIView):
+#     """
+#     This view is used for displaying profile information
+#     """
+#
+#     model = Profile
+#     # when setting this variable, only logged-in user can access view
+#     permission_classes = (IsAuthenticated,)
+#
+#     def get(self, request):
+#         profile = self.model.objects.all()
+#         serializer = ProfileSerializer(profile, many=True)
+#         return Response(serializer.data)
 
 
 class ProfileDetail(APIView):
