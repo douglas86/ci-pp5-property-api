@@ -18,20 +18,40 @@ from .serializers import ProfileSerializer, ChangePasswordSerializer
 
 # Create your views here.
 class ProfileView(ViewSet):
+    """
+    View all Profiles in database
+    """
+
     model = Profile
     serializer_class = ProfileSerializer
     authentication_classes = (TokenAuthentication, SessionAuthentication)
 
     async def async_generator(self):
+        """
+        Generates all Profiles in database using async generator
+        :return:
+        """
+
         profiles = self.model.objects.all()
 
         yield profiles
 
     async def async_coroutine(self):
+        """
+        Iterate over all Profiles in database from async generator
+        :return:
+        """
+
         async for profile in self.async_generator():
             return profile
 
     def retrieve(self, request):
+        """
+        Retrieve all Profiles from a database for viewing
+        :param request:
+        :return:
+        """
+
         data = asyncio.run(self.async_coroutine())
         serializer = ProfileSerializer(data, many=True, context={'request', request})
 
