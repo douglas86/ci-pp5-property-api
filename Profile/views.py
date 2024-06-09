@@ -46,6 +46,11 @@ class ProfileView(ViewSet):
             return profile
 
     async def main(self):
+        """
+        Awaits all Profiles in database from async coroutine
+        :return:
+        """
+
         task = asyncio.create_task(self.async_coroutine())
         return await task
 
