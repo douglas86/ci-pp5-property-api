@@ -67,6 +67,54 @@ class ProfileView(ViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+class ProfileByIDView(ViewSet):
+    """
+    View profile by ID
+    """
+
+    model = Profile
+    pk = None
+    serializer_class = ProfileSerializer
+    permission_classes = (IsAuthenticated, IsAdminUser)
+
+    async def async_generator(self):
+        """
+        Generates all Profiles in database using async generator
+        :return:
+        """
+
+        profiles = self.model.objects.filter(pk=self.pk)
+
+        yield profiles
+
+    async def async_coroutine(self):
+        """
+        Iterate over all Profiles in database from async generator
+        :return:
+        """
+
+        async for profile in self.async_generator():
+            return profile
+
+    async def main(self):
+        """
+        Awaits all Profiles in database from async coroutine
+        :return:
+        """
+
+        task = asyncio.create_task(self.async_coroutine())
+        return await task
+
+    def retrieve(self, request, pk=None):
+        self.pk = pk
+        user = asyncio.run(self.main())
+        serializer = ProfileSerializer(user, many=True, context={'request', request})
+
+        print('user', user)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
 class ChangePassword(APIView):
     """
     This view is used for changing passwords
