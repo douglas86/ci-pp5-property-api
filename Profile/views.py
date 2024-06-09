@@ -45,6 +45,10 @@ class ProfileView(ViewSet):
         async for profile in self.async_generator():
             return profile
 
+    async def main(self):
+        task = asyncio.create_task(self.async_coroutine())
+        return await task
+
     def retrieve(self, request):
         """
         Retrieve all Profiles from a database for viewing
@@ -52,10 +56,10 @@ class ProfileView(ViewSet):
         :return:
         """
 
-        data = asyncio.run(self.async_coroutine())
+        data = asyncio.run(self.main())
         serializer = ProfileSerializer(data, many=True, context={'request', request})
 
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class ChangePassword(APIView):
