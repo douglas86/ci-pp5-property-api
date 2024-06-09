@@ -23,56 +23,6 @@ class ProfileView(ViewSet):
     """
 
     model = Profile
-    serializer_class = ProfileSerializer
-    permission_classes = (IsAuthenticated, IsAdminUser)
-
-    async def async_generator(self):
-        """
-        Generates all Profiles in database using async generator
-        :return:
-        """
-
-        profiles = self.model.objects.all()
-
-        yield profiles
-
-    async def async_coroutine(self):
-        """
-        Iterate over all Profiles in database from async generator
-        :return:
-        """
-
-        async for profile in self.async_generator():
-            return profile
-
-    async def main(self):
-        """
-        Awaits all Profiles in database from async coroutine
-        :return:
-        """
-
-        task = asyncio.create_task(self.async_coroutine())
-        return await task
-
-    def retrieve(self, request):
-        """
-        Retrieve all Profiles from a database for viewing
-        :param request:
-        :return:
-        """
-
-        data = asyncio.run(self.main())
-        serializer = ProfileSerializer(data, many=True, context={'request', request})
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-
-class ProfileByIDView(ViewSet):
-    """
-    View profile by ID
-    """
-
-    model = Profile
     pk = None
     serializer_class = ProfileSerializer
     permission_classes = (IsAuthenticated, IsAdminUser)
@@ -83,7 +33,10 @@ class ProfileByIDView(ViewSet):
         :return:
         """
 
-        profiles = self.model.objects.filter(pk=self.pk)
+        if self.pk is None:
+            profiles = self.model.objects.all()
+        else:
+            profiles = self.model.objects.filter(pk=self.pk)
 
         yield profiles
 
@@ -106,11 +59,17 @@ class ProfileByIDView(ViewSet):
         return await task
 
     def retrieve(self, request, pk=None):
-        self.pk = pk
-        user = asyncio.run(self.main())
-        serializer = ProfileSerializer(user, many=True, context={'request', request})
+        """
+        Retrieve all Profiles from a database for viewing
+        If pk is given retrieve profile by id
+        :param pk: primary key or id of profile
+        :param request: data to be returned
+        :return:
+        """
 
-        print('user', user)
+        self.pk = pk
+        data = asyncio.run(self.main())
+        serializer = ProfileSerializer(data, many=True, context={'request', request})
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
