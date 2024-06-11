@@ -16,6 +16,11 @@ from .models import Profile
 from .serializers import ProfileSerializer, ChangePasswordSerializer
 
 
+class IsSuperUser(IsAdminUser):
+    def has_permission(self, request, view):
+        return request.user.is_superuser
+
+
 # Create your views here.
 class ProfileView(ViewSet):
     """
@@ -25,7 +30,7 @@ class ProfileView(ViewSet):
     model = Profile
     pk = None
     serializer_class = ProfileSerializer
-    permission_classes = (IsAuthenticated, IsAdminUser)
+    permission_classes = (IsAuthenticated, IsSuperUser)
 
     # authentication_classes = (TokenAuthentication, SessionAuthentication)
 
