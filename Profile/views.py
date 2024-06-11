@@ -25,8 +25,9 @@ class ProfileView(ViewSet):
     model = Profile
     pk = None
     serializer_class = ProfileSerializer
-    permission_classes = (IsAuthenticated, IsAdminUser)
-    authentication_classes = (TokenAuthentication, SessionAuthentication)
+    permission_classes = (IsAuthenticated,)
+
+    # authentication_classes = (TokenAuthentication, SessionAuthentication)
 
     async def async_generator(self):
         """
