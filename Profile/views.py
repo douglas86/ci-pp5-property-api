@@ -43,7 +43,7 @@ class ProfileView(ViewSet):
         if self.pk is None:
             profiles = self.model.objects.all()
         else:
-            profiles = self.model.objects.filter(pk=self.pk)
+            profiles = self.model.objects.filter(user_id=self.pk)
 
         yield profiles
 
