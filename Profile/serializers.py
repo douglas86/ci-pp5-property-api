@@ -11,6 +11,7 @@ class ProfileSerializer(Serializer):
 
     id = serializers.IntegerField(read_only=True)
     user = serializers.ReadOnlyField(source='user.username')
+    user_id = serializers.ReadOnlyField(source='user.id')
     profile_picture = serializers.SerializerMethodField()
     role = serializers.SerializerMethodField()
     created_at = serializers.ReadOnlyField()
