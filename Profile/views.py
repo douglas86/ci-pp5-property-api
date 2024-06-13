@@ -9,6 +9,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authtoken.admin import User
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from adrf.viewsets import ViewSet
 from asgiref.sync import async_to_sync
 
@@ -30,7 +31,8 @@ class ProfileView(ViewSet):
     model = Profile
     pk = None
     serializer_class = ProfileSerializer
-    permission_classes = (IsAuthenticated, IsSuperUser)
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
 
     # authentication_classes = (TokenAuthentication, SessionAuthentication)
 
