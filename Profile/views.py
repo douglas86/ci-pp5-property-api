@@ -41,10 +41,14 @@ class LoginView(ViewSet):
                     'profile': self.search(serializer)}
 
     def retrieve(self, request):
-        self.username = request.POST['username']
-        self.password = request.POST['password']
 
-        return Response(self.checks(request))
+        try:
+            self.username = request.POST['username']
+            self.password = request.POST['password']
+
+            return Response(self.checks(request))
+        except KeyError:
+            return Response({'message': self.error_message, 'status': status.HTTP_403_FORBIDDEN})
 
 
 class LogoutView(ViewSet):
