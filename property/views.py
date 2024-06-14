@@ -7,6 +7,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from Profile.models import Profile
 from Profile.serializers import ProfileSerializer
+from rest_framework.permissions import IsAdminUser
 
 
 class HomeView(ViewSet):
@@ -42,3 +43,8 @@ class AsyncViewSet:
     def retrieve(self):
         data = self.main()
         return data
+
+
+class IsSuperUser(IsAdminUser):
+    def has_permission(self, request, view):
+        return request.user.is_superuser

@@ -6,5 +6,5 @@ app_name = 'Profile'
 
 urlpatterns = [
     path('login/', views.LoginView.as_view({'post': 'retrieve'}), name='login_view'),
-    path('profiles/change_password/', views.ChangePassword.as_view(), name='change_password'),
+    # path('profiles/change_password/', views.ChangePassword.as_view(), name='change_password'),
 ]
