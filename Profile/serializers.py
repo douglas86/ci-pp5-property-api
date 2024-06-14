@@ -9,7 +9,7 @@ class ProfileSerializer(Serializer):
     Serializer class for a Profile model.
     """
 
-    id = serializers.IntegerField(read_only=True)
+    id = serializers.ReadOnlyField(source='user.id')
     user = serializers.ReadOnlyField(source='user.username')
     user_id = serializers.ReadOnlyField(source='user.id')
     profile_picture = serializers.SerializerMethodField()
