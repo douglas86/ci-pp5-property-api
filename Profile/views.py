@@ -1,6 +1,6 @@
 import asyncio
 
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, logout
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -45,6 +45,14 @@ class LoginView(ViewSet):
         self.password = request.POST['password']
 
         return Response(self.checks(request))
+
+
+class LogoutView(ViewSet):
+    message = 'You have successfully logged out'
+
+    def retrieve(self, request):
+        logout(request)
+        return Response({'message': self.message, 'status': status.HTTP_200_OK})
 
 
 class ProfileListView(ViewSet):
