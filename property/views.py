@@ -42,37 +42,3 @@ class AsyncViewSet:
     def retrieve(self):
         data = self.main()
         return data
-
-
-class LoginView(ViewSet):
-    model = Profile.objects.all()
-    username = None
-    password = None
-    pk = None
-    message = 'You have successfully logged in'
-    error_message = 'The credentials entered are incorrect.'
-
-    def get_profile(self):
-        profile_model = self.model
-        profile = AsyncViewSet(profile_model).retrieve()
-        return profile
-
-    def search(self, serializer):
-        return [element for element in serializer.data if element['user'] == self.username]
-
-    def checks(self, request):
-        user = authenticate(username=self.username, password=self.password)
-
-        if user is None:
-            return {'message': self.error_message, 'status': status.HTTP_404_NOT_FOUND}
-        else:
-            self.pk = user.id
-            serializer = ProfileSerializer(instance=self.get_profile(), many=True, context={'request': request})
-            return {'message': self.message, 'status': status.HTTP_200_OK,
-                    'profile': self.search(serializer)}
-
-    def retrieve(self, request):
-        self.username = request.POST['username']
-        self.password = request.POST['password']
-
-        return Response(self.checks(request))

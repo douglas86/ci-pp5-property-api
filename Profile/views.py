@@ -1,7 +1,7 @@
 import asyncio
 
 from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth import update_session_auth_hash, authenticate
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
@@ -15,6 +15,7 @@ from asgiref.sync import async_to_sync
 
 from .models import Profile
 from .serializers import ProfileSerializer, ChangePasswordSerializer
+from property.views import AsyncViewSet
 
 
 class IsSuperUser(IsAdminUser):
@@ -22,65 +23,39 @@ class IsSuperUser(IsAdminUser):
         return request.user.is_superuser
 
 
-# Create your views here.
-class ProfileView(ViewSet):
-    """
-    View all Profiles in database
-    """
-
-    model = Profile
-    pk = None
-    serializer_class = ProfileSerializer
-    permission_classes = [IsAuthenticated]
+class LoginView(ViewSet):
+    model = Profile.objects.all()
+    permission_classes = [IsAuthenticated, ]
     authentication_classes = [JWTAuthentication]
+    username = None
+    password = None
+    pk = None
+    message = 'You have successfully logged in!'
+    error_message = 'The credentials entered are incorrect'
 
-    # authentication_classes = (TokenAuthentication, SessionAuthentication)
+    def get_profile(self):
+        profile = AsyncViewSet(self.model).retrieve()
+        return profile
 
-    async def async_generator(self):
-        """
-        Generates all Profiles in database using async generator
-        :return:
-        """
+    def search(self, serializer):
+        return [element for element in serializer.data if element['user'] == self.username]
 
-        if self.pk is None:
-            profiles = self.model.objects.all()
+    def checks(self, request):
+        user = authenticate(username=self.username, password=self.password)
+
+        if user is None:
+            return {'message': self.error_message, 'status': status.HTTP_404_NOT_FOUND}
         else:
-            profiles = self.model.objects.filter(user_id=self.pk)
+            self.pk = user.id
+            serializer = ProfileSerializer(instance=self.get_profile(), many=True, context={'request': request})
+            return {'message': self.message, 'status': status.HTTP_200_OK,
+                    'profile': self.search(serializer)}
 
-        yield profiles
+    def retrieve(self, request):
+        self.username = request.POST['username']
+        self.password = request.POST['password']
 
-    async def async_coroutine(self):
-        """
-        Iterate over all Profiles in database from async generator
-        :return:
-        """
-
-        async for profile in self.async_generator():
-            return profile
-
-    async def main(self):
-        """
-        Awaits all Profiles in database from async coroutine
-        :return:
-        """
-
-        task = asyncio.create_task(self.async_coroutine())
-        return await task
-
-    def retrieve(self, request, pk=None):
-        """
-        Retrieve all Profiles from a database for viewing
-        If pk is given retrieve profile by id
-        :param pk: primary key or id of profile
-        :param request: data to be returned
-        :return:
-        """
-
-        self.pk = pk
-        data = asyncio.run(self.main())
-        serializer = ProfileSerializer(data, many=True, context={'request', request})
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(self.checks(request))
 
 
 class ChangePassword(APIView):
