@@ -9,7 +9,7 @@ from adrf.viewsets import ViewSet
 
 from .models import Profile
 from .serializers import ProfileSerializer, ChangePasswordSerializer
-from property.views import AsyncViewSet
+from property.views import AsyncViewSet, IsSuperUser
 
 
 class LoginView(ViewSet):
@@ -45,6 +45,28 @@ class LoginView(ViewSet):
         self.password = request.POST['password']
 
         return Response(self.checks(request))
+
+
+class ProfileListView(ViewSet):
+    model = Profile.objects.all()
+    permission_classes = [IsAuthenticated, IsSuperUser]
+    authentication_classes = [JWTAuthentication]
+
+    message = 'You have successfully fetched data from database'
+    error_message = 'There was an error fetching data from database'
+
+    def get_profiles(self, request):
+        try:
+            profile = AsyncViewSet(self.model).retrieve()
+            serializer = ProfileSerializer(instance=profile, many=True, context={'request': request})
+            return {'message': self.message, 'status': status.HTTP_200_OK,
+                    'profile': serializer.data}
+        except AssertionError:
+            return {'message': self.error_message, 'status': status.HTTP_404_NOT_FOUND}
+
+    def retrieve(self, request):
+
+        return Response(self.get_profiles(request))
 
 # class ChangePassword(APIView):
 #     """
