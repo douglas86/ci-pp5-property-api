@@ -18,58 +18,61 @@ class HomeView(ViewSet):
         return Response({'message': self.message})
 
 
+class AsyncViewSet:
+
+    def __init__(self, model, **kwargs):
+        super().__init__(**kwargs)
+        self.model = model
+
+    async def async_generator(self):
+        yield self.model
+
+    async def async_coroutine(self):
+        async for data in self.async_generator():
+            return data
+
+    async def get_queryset(self):
+        task = asyncio.create_task(self.async_coroutine())
+        return await task
+
+    def main(self):
+        data = asyncio.run(self.get_queryset())
+        return data
+
+    def retrieve(self):
+        data = self.main()
+        return data
+
+
 class LoginView(ViewSet):
-    model = User.objects.all().values('id', 'username', 'password')
+    model = Profile.objects.all()
     username = None
     password = None
     pk = None
     message = 'You have successfully logged in'
     error_message = 'The credentials entered are incorrect.'
 
-    async def async_generator(self):
-        user = self.model
-        yield user
-
-    async def async_coroutine(self):
-        async for user in self.async_generator():
-            return user
-
-    async def main(self):
-        task = asyncio.create_task(self.async_coroutine())
-        return await task
-
-    async def async_generator1(self):
-        profile = Profile.objects.all()
-        yield profile
-
-    async def async_coroutine1(self):
-        async for profile in self.async_generator1():
-            return profile
-
-    async def main1(self):
-        task = asyncio.create_task(self.async_coroutine1())
-        return await task
-
     def get_profile(self):
-        data = asyncio.run(self.main())
-        return [element for element in data if element['id'] == self.pk]
+        profile_model = self.model
+        profile = AsyncViewSet(profile_model).retrieve()
+        return profile
 
-    def get_user(self):
-        data = asyncio.run(self.main())
-        return [element for element in data if element['username'] == self.username]
+    def search(self, serializer):
+        return [element for element in serializer.data if element['user'] == self.username]
 
-    def checks(self):
+    def checks(self, request):
         user = authenticate(username=self.username, password=self.password)
 
         if user is None:
             return {'message': self.error_message, 'status': status.HTTP_404_NOT_FOUND}
         else:
             self.pk = user.id
-            return {'message': self.message, 'status': status.HTTP_200_OK, 'user': self.get_user(),
-                    'profile': self.get_profile()}
+            serializer = ProfileSerializer(instance=self.get_profile(), many=True, context={'request': request})
+            return {'message': self.message, 'status': status.HTTP_200_OK,
+                    'profile': self.search(serializer)}
 
     def retrieve(self, request):
         self.username = request.POST['username']
         self.password = request.POST['password']
 
-        return Response(self.checks())
+        return Response(self.checks(request))
