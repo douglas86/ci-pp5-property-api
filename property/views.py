@@ -11,8 +11,6 @@ from rest_framework.permissions import IsAdminUser
 
 
 class HomeView(ViewSet):
-    username = ""
-    password = ""
     message = 'This is the home view'
 
     async def list(self, request):
