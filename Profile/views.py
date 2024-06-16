@@ -6,11 +6,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from adrf.viewsets import ViewSet
 
 from .models import Profile
-from .serializers import ProfileSerializer, ChangePasswordSerializer
+from .serializers import ProfileSerializer, ChangePasswordSerializer, TokenSerializer
 from property.views import AsyncViewSet, IsSuperUser
 
 
@@ -57,24 +56,6 @@ class LogoutView(ViewSet):
     def retrieve(self, request):
         logout(request)
         return Response({'message': self.message, 'status': status.HTTP_200_OK})
-
-
-class TokenSerializer(TokenObtainPairSerializer):
-    def get_token(self, user):
-        token = super().get_token(user)
-
-        token['name'] = user.username
-
-        return token
-
-    def validate(self, attrs):
-        data = super().validate(attrs)
-
-        user = self.user
-        data['user_id'] = user.id
-        data['username'] = user.username
-
-        return data
 
 
 class TokenView(TokenObtainPairView):

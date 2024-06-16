@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from adrf.serializers import Serializer
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from .models import Profile
 
@@ -48,3 +49,21 @@ class ChangePasswordSerializer(serializers.Serializer):
     # These two serializers will show on the form
     old_password = serializers.CharField(required=True)
     new_password = serializers.CharField(required=True)
+
+
+class TokenSerializer(TokenObtainPairSerializer):
+    def get_token(self, user):
+        token = super().get_token(user)
+
+        token['name'] = user.username
+
+        return token
+
+    def validate(self, attrs):
+        data = super().validate(attrs)
+
+        user = self.user
+        data['user_id'] = user.id
+        data['username'] = user.username
+
+        return data
