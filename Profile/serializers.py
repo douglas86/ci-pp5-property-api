@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from adrf.serializers import Serializer
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from django.contrib.auth.models import User
 
 from .models import Profile
 
@@ -10,13 +11,16 @@ class ProfileSerializer(Serializer):
     Serializer class for a Profile model.
     """
 
-    id = serializers.ReadOnlyField(source='user.id')
+    id = serializers.SerializerMethodField()
     user = serializers.ReadOnlyField(source='user.username')
     user_id = serializers.ReadOnlyField(source='user.id')
     profile_picture = serializers.SerializerMethodField()
     role = serializers.SerializerMethodField()
     created_at = serializers.ReadOnlyField()
     updated_at = serializers.ReadOnlyField()
+
+    def get_id(self, obj):
+        return obj.user.id
 
     def get_profile_picture(self, obj):
         """
@@ -49,21 +53,3 @@ class ChangePasswordSerializer(serializers.Serializer):
     # These two serializers will show on the form
     old_password = serializers.CharField(required=True)
     new_password = serializers.CharField(required=True)
-
-
-class TokenSerializer(TokenObtainPairSerializer):
-    def get_token(self, user):
-        token = super().get_token(user)
-
-        token['name'] = user.username
-
-        return token
-
-    def validate(self, attrs):
-        data = super().validate(attrs)
-
-        user = self.user
-        data['user_id'] = user.id
-        data['username'] = user.username
-
-        return data

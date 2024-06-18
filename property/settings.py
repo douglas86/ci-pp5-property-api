@@ -60,7 +60,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'cloudinary',
-    'adrf',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -69,8 +68,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
     'django_filters',
     'corsheaders',
+    'adrf',
 
     'Profile',
     'stocks',
@@ -97,7 +98,7 @@ REST_FRAMEWORK = {
         else 'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
     ),
     # 'DEFAULT_PERMISSION_CLASSES': [
-    #     'rest_framework.permissions.IsAuthenticated'
+    #     'rest_framework.permissions.AllowAny'
     # ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
@@ -152,7 +153,7 @@ if 'CLIENT_ORIGIN' in os.environ:
     ]
 else:
     CORS_ALLOWED_ORIGIN_REGEXES = [
-        "http://localhost:3000/"
+        "http://localhost:3000"
     ]
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -176,6 +177,8 @@ CORS_ALLOW_HEADERS = [
     "origin",
     "user-agent",
     "x-csrftoken",
+    "sessionid",
+    "refresh",
     "x-requested-with",
 ]
 
