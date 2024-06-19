@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from rest_framework import serializers
 from adrf.serializers import Serializer
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -53,3 +54,10 @@ class ChangePasswordSerializer(serializers.Serializer):
     # These two serializers will show on the form
     old_password = serializers.CharField(required=True)
     new_password = serializers.CharField(required=True)
+
+    def validate_password(self, value):
+        try:
+            validate_password(value)
+        except ValidationError as e:
+            raise serializers.ValidationError(e.message)
+        return value

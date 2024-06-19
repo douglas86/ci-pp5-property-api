@@ -1,20 +1,12 @@
-# import asyncio
-#
-# from django.contrib.auth import authenticate, logout
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-# from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
-# from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenBlacklistView
 from adrf.viewsets import ViewSet
 from rest_framework.views import APIView
-# from rest_framework.authtoken.models import Token
-# from django.contrib.auth.models import User
-#
 from .models import Profile
-from .serializers import ProfileSerializer  # ChangePasswordSerializer
+from .serializers import ProfileSerializer, ChangePasswordSerializer
 from property.views import AsyncViewSet, IsSuperUser
 
 
@@ -24,12 +16,15 @@ class LogoutView(APIView):
     """
 
     message = 'You have successfully logged out!'
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (TokenAuthentication, SessionAuthentication)
 
     def post(self, request):
         return self.logout(request)
 
     def logout(self, request):
         refresh = request.headers.get("refresh")
+        print('refresh', refresh)
         refresh_token = RefreshToken(refresh)
         refresh_token.blacklist()
 
@@ -76,44 +71,30 @@ class ProfileListView(ViewSet):
     def retrieve(self, request):
         return Response(self.get_profiles(request))
 
-# class ChangePassword(APIView):
-#     """
-#     This view is used for changing passwords
-#     """
-#
-#     model = Profile
-#     # serializer needed for serializing to json data
-#     serializer_class = ChangePasswordSerializer
-#
-#     def post(self, request):
-#         # fetches data serializers form
-#         serializer = self.serializer_class(data=request.data)
-#
-#         # if the form is valid data
-#         if serializer.is_valid():
-#             # change the password based on the current user
-#             user = request.user
-#
-#             # passwords fetched from serializer form
-#             old_password = serializer.validated_data.get('old_password')
-#             new_password = serializer.validated_data.get('new_password')
-#
-#             # check if old password is correct
-#             if not user.check_password(old_password):
-#                 return Response({'old_password': ['Wrong password']}, status=status.HTTP_400_BAD_REQUEST)
-#
-#             # form to be submitted
-#             #  new_password1 and new_password2 as the same to pass validation checks
-#             form = PasswordChangeForm(user, {'old_password': old_password, 'new_password1': new_password,
-#                                              'new_password2': new_password})
-#
-#             # run only if the form is the correct data
-#             # once form is correct then save the new password
-#             if form.is_valid():
-#                 user = form.save()
-#                 update_session_auth_hash(request, user)
-#                 return Response({'message': 'Password changed successfully'}, status=status.HTTP_200_OK)
-#             else:
-#                 return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
-#         else:
-#             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ChangePasswordView(ViewSet):
+    """
+    Change a password from new to old password
+    """
+
+    serializer_class = ChangePasswordSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+
+    def change_password(self, request):
+        serializer = self.serializer_class(data=request.data)
+        user = request.user
+
+        if serializer.is_valid():
+            if not user.check_password(serializer.validated_data['old_password']):
+                return Response({'message': 'There was an error with the password that you entered',
+                                 'status': status.HTTP_400_BAD_REQUEST})
+
+            user.set_password(serializer.validated_data['new_password'])
+            user.save()
+            return Response({'message': 'You have successfully changed your password', 'status': status.HTTP_200_OK})
+
+        return Response({'message': serializer.errors, 'status': status.HTTP_400_BAD_REQUEST})
+
+    def retrieve(self, request):
+        return self.change_password(request)
