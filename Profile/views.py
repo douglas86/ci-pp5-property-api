@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -74,27 +75,46 @@ class ProfileListView(ViewSet):
 
 class ChangePasswordView(ViewSet):
     """
-    Change a password from new to old password
+    Changing password based on username
     """
 
+    model = Profile
     serializer_class = ChangePasswordSerializer
-    permission_classes = [IsAuthenticated]
-    authentication_classes = [TokenAuthentication, SessionAuthentication]
+
+    success_message = 'You have successfully changed password'
+    error_message = 'There was an error changing password'
+    field_error_message = 'All fields are required'
+
+    status_200 = status.HTTP_200_OK
+    status_400 = status.HTTP_400_BAD_REQUEST
 
     def change_password(self, request):
-        serializer = self.serializer_class(data=request.data)
-        user = request.user
+        """
+        Logic to change password
+        :param request:
+        :return:
+        """
 
-        if serializer.is_valid():
-            if not user.check_password(serializer.validated_data['old_password']):
-                return Response({'message': 'There was an error with the password that you entered',
-                                 'status': status.HTTP_400_BAD_REQUEST})
+        serializer = ChangePasswordSerializer(data=request.data)
+        try:
+            username = request.data['username']
 
-            user.set_password(serializer.validated_data['new_password'])
-            user.save()
-            return Response({'message': 'You have successfully changed your password', 'status': status.HTTP_200_OK})
+            if serializer.is_valid():
+                user = AsyncViewSet(User.objects.get(username=username)).retrieve()
+                if not user.check_password(serializer.validated_data['old_password']):
+                    return Response({'message': self.error_message, 'status': self.status_400})
 
-        return Response({'message': serializer.errors, 'status': status.HTTP_400_BAD_REQUEST})
+                user.set_password(serializer.validated_data['new_password'])
+                user.save()
+                return Response({'message': self.success_message, 'status': self.status_200})
+        except KeyError:
+            return Response({'message': self.field_error_message, 'status': self.status_400})
 
     def retrieve(self, request):
+        """
+        Send response to request
+        :param request:
+        :return:
+        """
+
         return self.change_password(request)

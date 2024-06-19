@@ -45,17 +45,24 @@ class ProfileSerializer(Serializer):
             return obj.role
 
 
-class ChangePasswordSerializer(serializers.Serializer):
+class ChangePasswordSerializer(Serializer):
     """
     This serializer is used to change password.
     Taking in the old password and replacing it with new one.
     """
 
     # These two serializers will show on the form
-    old_password = serializers.CharField(required=True)
-    new_password = serializers.CharField(required=True)
+    username = serializers.CharField(required=True, allow_blank=False)
+    old_password = serializers.CharField(required=True, allow_blank=False)
+    new_password = serializers.CharField(required=True, allow_blank=False)
 
     def validate_password(self, value):
+        """
+        Method used to validate the old password and replacing it with new one.
+        :param value:
+        :return:
+        """
+
         try:
             validate_password(value)
         except ValidationError as e:
