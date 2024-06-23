@@ -18,7 +18,7 @@ class LogoutView(APIView):
 
     message = 'You have successfully logged out!'
     permission_classes = (IsAuthenticated,)
-    authentication_classes = (TokenAuthentication, SessionAuthentication)
+    authentication_classes = (TokenAuthentication,)
 
     def post(self, request):
         return self.logout(request)
