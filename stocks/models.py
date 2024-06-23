@@ -11,6 +11,7 @@ def upload_location(instance, filename):
 class Stocks(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     property_image = models.ImageField(upload_to=upload_location, default='default_profile_rkmhff')
+    # property_image = models.CharField(max_length=1000)
     property_address = models.CharField(max_length=100)
     property_area = models.CharField(max_length=100)
     area_code = models.CharField(max_length=100)
