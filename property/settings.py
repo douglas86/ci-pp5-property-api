@@ -145,6 +145,7 @@ else:
     ]
     CORS_ALLOWED_ORIGIN_REGEXES = [
         "http://localhost:3000",
+        "https://ci-pps-property-react-e3272eaff8d9.herokuapp.com/"
     ]
 
 if 'CLIENT_ORIGIN' in os.environ:
@@ -153,12 +154,16 @@ if 'CLIENT_ORIGIN' in os.environ:
     ]
 else:
     CORS_ALLOWED_ORIGIN_REGEXES = [
-        "http://localhost:3000"
+        "http://localhost:3000",
+        "https://ci-pps-property-react-e3272eaff8d9.herokuapp.com/"
     ]
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
-CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:3000',
+    "https://ci-pps-property-react-e3272eaff8d9.herokuapp.com/"
+]
 
 CORS_ALLOW_METHODS = [
     "DELETE",

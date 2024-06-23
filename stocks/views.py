@@ -27,6 +27,7 @@ class PropertyCreateView(ViewSet):
         else:
             return Response({'message': self.error_message, 'status': status.HTTP_400_BAD_REQUEST})
 
+
 # Read
 class StocksList(APIView):
     model = Stocks
