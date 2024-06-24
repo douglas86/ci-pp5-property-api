@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 import os
+from datetime import timedelta
 from pathlib import Path
 import dj_database_url
 
@@ -50,6 +51,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -65,8 +67,11 @@ INSTALLED_APPS = [
     'dj_rest_auth',
     'rest_framework',
     'rest_framework.authtoken',
+    'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
     'django_filters',
     'corsheaders',
+    'adrf',
 
     'Profile',
     'stocks',
@@ -86,16 +91,38 @@ MIDDLEWARE = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [(
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication'
         if LOCALHOST == 'True'
         else 'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
-    )],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny'
-    ],
+    ),
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.AllowAny'
+    # ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
+    'TOKEN_LIFETIME': timedelta(days=1),
+    'TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+}
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': (
+#         'rest_framework.permissions.IsAuthenticated',
+#     ),
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework_simplejwt.authentication.JWTAuthentication',
+#     )
+# }
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=7),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=7),
+    'SLIDING_TOKEN_LIFETIME': timedelta(days=7),
+    'SLIDING_TOKEN_REFRESH_LIFETIME_LATE_USER': timedelta(days=7),
+    'SLIDING_TOKEN_LIFETIME_LATE_USER': timedelta(days=7),
 }
 
 if LOCALHOST == 'True':
@@ -105,8 +132,8 @@ if LOCALHOST == 'True':
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
-    INSTALLED_APPS.append('django_browser_reload')
-    MIDDLEWARE.append("django_browser_reload.middleware.BrowserReloadMiddleware")
+    # INSTALLED_APPS.append('django_browser_reload')
+    # MIDDLEWARE.append("django_browser_reload.middleware.BrowserReloadMiddleware")
 else:
     DATABASES = {
         'default': dj_database_url.parse(os.environ.get('DJANGO_DATABASE_URL'))
@@ -118,6 +145,7 @@ else:
     ]
     CORS_ALLOWED_ORIGIN_REGEXES = [
         "http://localhost:3000",
+        "https://ci-pps-property-react-e3272eaff8d9.herokuapp.com"
     ]
 
 if 'CLIENT_ORIGIN' in os.environ:
@@ -126,12 +154,16 @@ if 'CLIENT_ORIGIN' in os.environ:
     ]
 else:
     CORS_ALLOWED_ORIGIN_REGEXES = [
-        "http://localhost:3000/"
+        "http://localhost:3000",
+        "https://ci-pps-property-react-e3272eaff8d9.herokuapp.com"
     ]
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
-CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:3000',
+    "https://ci-pps-property-react-e3272eaff8d9.herokuapp.com"
+]
 
 CORS_ALLOW_METHODS = [
     "DELETE",
@@ -150,6 +182,8 @@ CORS_ALLOW_HEADERS = [
     "origin",
     "user-agent",
     "x-csrftoken",
+    "sessionid",
+    "refresh",
     "x-requested-with",
 ]
 
@@ -172,7 +206,7 @@ TEMPLATES = [
 ]
 
 SITE_ID = 1
-WSGI_APPLICATION = 'property.wsgi.application'
+ASGI_APPLICATION = 'property.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases

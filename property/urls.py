@@ -16,12 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework import routers
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from .views import PropertyListView
+from .views import HomeView
 from .settings import LOCALHOST
 
+# router = routers.DefaultRouter()
+# router.register("", HomeView, basename="property_list")
+
 urlpatterns = [
-    path("", PropertyListView.as_view(), name="property_list"),
+    # path("", include(router.urls)),
+    path("", HomeView.as_view({'get': 'list'}), name="home"),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
@@ -30,6 +36,3 @@ urlpatterns = [
     path('profiles/', include('Profile.urls')),
     path('stocks/', include('stocks.urls')),
 ]
-
-if LOCALHOST == 'True':
-    urlpatterns.append(path("__reload__/", include("django_browser_reload.urls")))

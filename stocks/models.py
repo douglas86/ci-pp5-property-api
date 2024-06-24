@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-def upload_location(instance, filename):
+def upload_location(_, filename):
     return 'images/{filename}'.format(filename=filename)
 
 
