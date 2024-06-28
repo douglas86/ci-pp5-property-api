@@ -56,3 +56,25 @@ class StockListView(ViewSet):
 
     def retrieve(self, request):
         return Response(self.get_properties(request))
+
+
+class StockDeleteView(ViewSet):
+    model = Stocks
+    serializer_class = StockSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+
+    message = "You have successfully deleted a property."
+    error_message = "Something went wrong deleting a property."
+
+    def delete(self, request):
+        try:
+            data = AsyncViewSet(self.model.objects.get(id=request.data['id'])).retrieve()
+            serializer = StockSerializer(instance=data, many=True, context={'request': request})
+            stocks.delete()
+            return {'message': self.message, 'status': status.HTTP_200_OK, 'data': serializer.data}
+        except AssertionError:
+            return {'message': self.error_message, 'status': status.HTTP_400_BAD_REQUEST, 'data': None}
+
+    def retrieve(self, request):
+        return Response(self.delete(request))
