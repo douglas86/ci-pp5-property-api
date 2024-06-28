@@ -12,6 +12,10 @@ from property.views import AsyncViewSet
 # Create your views here.
 # Create
 class PropertyCreateView(ViewSet):
+    """
+    Create a new property and store it in the database
+    """
+
     permission_classes = [IsAuthenticated]
     authentication_classes = [TokenAuthentication, SessionAuthentication]
     serializer_class = StockSerializer
@@ -30,13 +34,11 @@ class PropertyCreateView(ViewSet):
 
 
 # Read
-# class StocksList(APIView):
-#     model = Stocks
-#
-#     def get(self, request):
-#         return Response(self.model.objects.all())
-
 class StockListView(ViewSet):
+    """
+    Fetches all Property data from a database
+    """
+
     model = Stocks.objects.all()
     permission_classes = [IsAuthenticated]
     authentication_classes = [TokenAuthentication, SessionAuthentication]
