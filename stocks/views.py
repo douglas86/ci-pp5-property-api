@@ -59,6 +59,10 @@ class StockListView(ViewSet):
 
 
 class StockDeleteView(ViewSet):
+    """
+    Deletes a property from a database
+    """
+
     model = Stocks
     serializer_class = StockSerializer
     permission_classes = [IsAuthenticated]
@@ -67,14 +71,16 @@ class StockDeleteView(ViewSet):
     message = "You have successfully deleted a property."
     error_message = "Something went wrong deleting a property."
 
-    def delete(self, request):
-        try:
-            data = AsyncViewSet(self.model.objects.get(id=request.data['id'])).retrieve()
-            serializer = StockSerializer(instance=data, many=True, context={'request': request})
-            stocks.delete()
-            return {'message': self.message, 'status': status.HTTP_200_OK, 'data': serializer.data}
-        except AssertionError:
-            return {'message': self.error_message, 'status': status.HTTP_400_BAD_REQUEST, 'data': None}
+    pk = None
 
-    def retrieve(self, request):
-        return Response(self.delete(request))
+    def delete_property(self, request):
+        try:
+            data = AsyncViewSet(self.model.objects.get(pk=self.pk)).retrieve()
+            data.delete()
+            return {'message': self.message, 'status': status.HTTP_200_OK}
+        except AssertionError:
+            return {'message': self.error_message, 'status': status.HTTP_400_BAD_REQUEST}
+
+    def retrieve(self, request, pk=None):
+        self.pk = pk
+        return Response(self.delete_property(request))
