@@ -6,6 +6,7 @@ from adrf.viewsets import ViewSet
 
 from .models import Stocks
 from .serilizers import StockSerializer
+from property.views import AsyncViewSet
 
 
 # Create your views here.
@@ -29,8 +30,27 @@ class PropertyCreateView(ViewSet):
 
 
 # Read
-class StocksList(APIView):
-    model = Stocks
+# class StocksList(APIView):
+#     model = Stocks
+#
+#     def get(self, request):
+#         return Response(self.model.objects.all())
 
-    def get(self, request):
-        return Response(self.model.objects.all())
+class StockListView(ViewSet):
+    model = Stocks.objects.all()
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+
+    message = "You have successfully fetched property data."
+    error_message = "Something went wrong fetching property data."
+
+    def get_properties(self, request):
+        try:
+            data = AsyncViewSet(self.model).retrieve()
+            serializer = StockSerializer(instance=data, many=True, context={'request': request})
+            return {'message': self.message, 'status': status.HTTP_200_OK, 'data': serializer.data}
+        except AssertionError:
+            return {'message': self.error_message, 'status': status.HTTP_400_BAD_REQUEST, 'data': None}
+
+    def retrieve(self, request):
+        return Response(self.get_properties(request))
