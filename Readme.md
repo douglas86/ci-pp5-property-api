@@ -43,6 +43,8 @@ You will also be able to see what maintenance contractor has been assigned to yo
   - [async/await](#asyncawait) 
 - [Testing](#testing)
 - [Bugs](#bugs)
+  - [Does not want to display data on heroku app](#does-not-want-to-display-data-on-heroku-app)
+  - [Cant create superuser the normal way](#cant-create-superuser-the-normal-way)
 - [Credits](#credits)
 
 ___
@@ -85,6 +87,35 @@ ___
 ---
 
 ### [Bugs](#table-of-content)
+
+#### [Does not want to display data on heroku app](#table-of-content)
+
+#### Problem?
+
+- when I go to the heroku live link it doesn't want to display
+- data as JSON data
+
+![problem1.png](assets/docs/heroku_app/problem1.png)
+
+#### Solution?
+
+- Adding a key value pair to REST_FRAMEWORK dictionary did the trick
+
+![solution.png](assets/docs/heroku_app/solution.png)
+
+#### [Cant create superuser the normal way](#table-of-content)
+
+##### Problem?
+
+- I cant seem to create superuser from the terminal
+- Then register through postman
+
+##### Solution?
+
+- I had to create the user through Postman first
+- then run python shell to create the superuser the long way
+
+![first.png](assets/docs/superuser/first.png)
 
 ---
 

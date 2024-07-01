@@ -39,7 +39,7 @@ class StockListView(ViewSet):
     Fetches all Property data from a database
     """
 
-    model = Stocks.objects.all()
+    model = Stocks
     permission_classes = [IsAuthenticated]
     authentication_classes = [TokenAuthentication, SessionAuthentication]
 
@@ -48,7 +48,7 @@ class StockListView(ViewSet):
 
     def get_properties(self, request):
         try:
-            data = AsyncViewSet(self.model).retrieve()
+            data = self.model.objects.all()
             serializer = StockSerializer(instance=data, many=True, context={'request': request})
             return {'message': self.message, 'status': status.HTTP_200_OK, 'data': serializer.data}
         except AssertionError:
@@ -101,7 +101,7 @@ class StockDeleteView(ViewSet):
 
     def delete_property(self, request):
         try:
-            data = AsyncViewSet(self.model.objects.get(pk=self.pk)).retrieve()
+            data = self.model.objects.get(pk=self.pk)
             data.delete()
             return {'message': self.message, 'status': status.HTTP_200_OK}
         except AssertionError:
