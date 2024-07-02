@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from adrf.viewsets import ViewSet
 from rest_framework.views import APIView
+
 from .models import Profile
 from .serializers import ProfileSerializer, ChangePasswordSerializer
 from property.views import AsyncViewSet, IsSuperUser
@@ -46,12 +47,36 @@ class ProfileByIdView(ViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+class ProfileDeleteView(ViewSet):
+    """
+    Delete profile by id
+    """
+    model = Profile
+
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    message = 'You have successfully deleted your profile!'
+    error_message = 'Something went wrong, please try again.'
+
+    def destroy(self, request, pk=None):
+        profile = self.model.objects.get(user_id=pk)
+        user = User.objects.get(pk=pk)
+
+        try:
+            profile.delete()
+            user.delete()
+            return Response({'message': self.message, 'status': status.HTTP_200_OK})
+        except profile.DoesNotExist:
+            return Response({'message': self.error_message, 'status': status.HTTP_404_NOT_FOUND})
+
+
 class ProfileListView(ViewSet):
     """
     Get all profiles
     """
 
-    model = Profile.objects.all()
+    model = Profile
     permission_classes = [IsAuthenticated, IsSuperUser]
     authentication_classes = [TokenAuthentication, SessionAuthentication]
 
@@ -60,7 +85,7 @@ class ProfileListView(ViewSet):
 
     def get_profiles(self, request):
         try:
-            profile = AsyncViewSet(self.model).retrieve()
+            profile = self.model.objects.all()
             serializer = ProfileSerializer(instance=profile, many=True, context={'request': request})
             return {'message': self.message, 'status': status.HTTP_200_OK,
                     'profile': serializer.data}
