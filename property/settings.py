@@ -46,8 +46,7 @@ SECRET_KEY = os.environ.get('DJANGO_SETTINGS_KEY')
 DEBUG = os.environ.get('DJANGO_DEBUG')
 LOCALHOST = os.environ.get('DJANGO_LOCALHOST')
 
-ALLOWED_HOSTS = ["https://ci-pps-property-react-e3272eaff8d9.herokuapp.com/",
-                 "https://ci-pp5-property-api-d3a66dbd3b1c.herokuapp.com"]
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
