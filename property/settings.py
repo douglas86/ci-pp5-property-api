@@ -46,7 +46,7 @@ SECRET_KEY = os.environ.get('DJANGO_SETTINGS_KEY')
 DEBUG = os.environ.get('DJANGO_DEBUG')
 LOCALHOST = os.environ.get('DJANGO_LOCALHOST')
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["https://ci-pps-property-react-e3272eaff8d9.herokuapp.com/"]
 
 # Application definition
 
@@ -145,7 +145,7 @@ else:
     ]
     CORS_ALLOWED_ORIGIN_REGEXES = [
         "http://localhost:3000",
-        "https://ci-pps-property-react-e3272eaff8d9.herokuapp.com"
+        "https://ci-pps-property-react-e3272eaff8d9.herokuapp.com",
     ]
 
 if 'CLIENT_ORIGIN' in os.environ:
