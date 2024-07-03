@@ -97,9 +97,6 @@ REST_FRAMEWORK = {
         if LOCALHOST == 'True'
         else 'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
     ),
-    # 'DEFAULT_PERMISSION_CLASSES': [
-    #     'rest_framework.permissions.AllowAny'
-    # ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
     'TOKEN_LIFETIME': timedelta(days=1),
@@ -107,15 +104,6 @@ REST_FRAMEWORK = {
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
 }
-
-# REST_FRAMEWORK = {
-#     'DEFAULT_PERMISSION_CLASSES': (
-#         'rest_framework.permissions.IsAuthenticated',
-#     ),
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
-#         'rest_framework_simplejwt.authentication.JWTAuthentication',
-#     )
-# }
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=7),
@@ -132,8 +120,6 @@ if LOCALHOST == 'True':
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
-    # INSTALLED_APPS.append('django_browser_reload')
-    # MIDDLEWARE.append("django_browser_reload.middleware.BrowserReloadMiddleware")
 else:
     DATABASES = {
         'default': dj_database_url.parse(os.environ.get('DJANGO_DATABASE_URL'))
