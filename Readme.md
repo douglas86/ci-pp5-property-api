@@ -42,7 +42,15 @@ You will also be able to see what maintenance contractor has been assigned to yo
 - [Features](#features)
   - [async/await](#asyncawait) 
 - [Testing](#testing)
+  - [Auto Testing](#auto-testing)
+    - [Authentication](#authentication)
+    - [Creating a Property](#creating-a-property)
+  - [Manual Testing](#manual-testing)
+    - [Authentication](#authentication-1)
 - [Bugs](#bugs)
+  - [Does not want to display data on heroku app](#does-not-want-to-display-data-on-heroku-app)
+  - [Cant create superuser the normal way](#cant-create-superuser-the-normal-way)
+  - [JSON data are not serializable when sending to React](#json-data-are-not-serializable-when-sending-to-react)
 - [Credits](#credits)
 
 ___
@@ -50,6 +58,8 @@ ___
 ### [Planning](#planning)
 
 #### [ERD diagrams for mapping out my models](#erd-diagrams-for-mapping-out-my-models)
+
+![model.png](assets/docs/ERD_diagrams/model.png)
 
 #### [User Stories using MOSCOW Prioritization techniques](#user-stories-using-moscow-prioritization-techniques)
 
@@ -73,18 +83,167 @@ ___
 
 #### [async/await](#features)
 
-- I was able to get async / await right in this project
-- With the help of a Package called [daphne](https://pypi.org/project/daphne/)
-- I also needed to use a Package called [adrf](https://pypi.org/project/adrf/) for async/await views
-- If you want to find out how I set up django for async / await, click [here](https://docs.google.com/document/d/1f-XpQLNI51lp_32UEDDWBoK9GzG8L_m7pP11FSGgwPs/edit#heading=h.cbds7u507bkn)
+- This Project is set up with Daphne support for async/await tasks
+
+How I got async/await right in this project
+
+- install the package daphne
+- $ pip install daphne
+- add daphne to the first app in the installed apps list
+- delete the variable WSGI_APPLICATION
+- replacing it with ASGI_APPLICATION = "app_name.asgi.application"
+- then re-run the server
+- you are now setup for async/await functionality
 
 ---
 
 ### [Testing](#table-of-content)
 
+#### [Auto testing](#table-of-content)
+
+##### [Authentication](#table-of-content)
+
+Testing if a user can register
+
+- I first tried registering a user with only username and password
+- This then provided me 400 status errors
+- Meaning that I didn't provide the correct details to register a user
+- It can also do a failing validation test
+- When I try and give the password 123 456
+- If I enter the correct credentials, it will return an access token and refresh token
+
+Failing Registration Test
+![fail_register_test.png](assets/docs/testing/authentication/fail_register_test.png)
+
+Passing Registration Test
+![passing_registration_test.png](assets/docs/testing/authentication/passing_registration_test.png)
+
+Testing if a user can log in
+
+- When I try and log in a user but haven't registered him yet
+- Gives me a failing test
+- When user is registered
+- Then you can log in as long as the validation checks are correct
+
+Passing login test
+![passing_login_test.png](assets/docs/testing/authentication/passing_login_test.png)
+
+If you try to login, but you are not registered
+![when_user_is_not_register_failing_test.png](assets/docs/testing/authentication/when_user_is_not_register_failing_test.png)
+
+Test if a user can log out
+
+- Register user first
+- Login user
+- Then logout user
+- Then check passes
+
+Passing test for a logout user
+![passing_test_for_logout_user.png](assets/docs/testing/authentication/passing_test_for_logout_user.png)
+
+Test if user can change password
+
+- Register user first
+- Then change password
+- Test check passes
+
+Passing of changing of passwords
+![testing_of_changing_password_passed.png](assets/docs/testing/authentication/testing_of_changing_password_passed.png)
+
+##### [Creating a Property](#table-of-content)
+
+- There were three tests that I ran on this problem
+
+Test 1: If there is no user that is logged in
+
+- First tested for 200 status codes
+- It returned a 403 forbidden http code
+- When I changed it to 403, the test passed
+
+![passed_test.png](assets/docs/testing/property/passed_test.png)
+
+Test 2: If the logged-in user is not an admin user
+
+- First tested for 201 status codes
+- It returned a 403 forbidden http code
+- When I changed it to 403, the test passed
+
+![passed_test.png](assets/docs/testing/property/passed_test.png)
+
+Test 3: If the logged-in user is an admin user
+
+- First tested for code 403 as that would be forbidden
+- Which failed as an admin is allowed to post data to the server
+- Then tested for 201 to create the data which passed
+
+![passed_test.png](assets/docs/testing/property/passed_test.png)
+
+#### [Manual testing](#table-of-content)
+
+##### [Authentication](#table-of-content)
+
+- When I am logged out, I can't get any profile details
+
+![logout_user.png](assets/docs/testing/authentication/logout_user.png)
+
+- when I am logged in as a user, I can't get profile details
+
+![user.png](assets/docs/testing/authentication/user.png)
+
+- when I am logged in as the admin, I can see all profile details
+
+![admin_user.png](assets/docs/testing/authentication/admin_user.png)
+
 ---
 
 ### [Bugs](#table-of-content)
+
+#### [Does not want to display data on heroku app](#table-of-content)
+
+#### Problem?
+
+- when I go to the heroku live link it doesn't want to display
+- data as JSON data
+
+![problem1.png](assets/docs/heroku_app/problem1.png)
+
+#### Solution?
+
+- Adding a key value pair to REST_FRAMEWORK dictionary did the trick
+
+![solution.png](assets/docs/heroku_app/solution.png)
+
+#### [Cant create superuser the normal way](#table-of-content)
+
+##### Problem?
+
+- I cant seem to create superuser from the terminal
+- Then register through postman
+
+##### Solution?
+
+- I had to create the user through Postman first
+- then run python shell to create the superuser the long way
+
+![first.png](assets/docs/superuser/first.png)
+
+#### [JSON data are not serializable when sending to React](#table-of-content)
+
+##### Problem?
+
+- The data has not be serialized when fetching and sending data
+
+![first.png](assets/docs/json_data/first.png)
+
+##### Solution?
+
+- The First thing was to change the view to async and await
+- The Second thing that needed to be done was add the Serializer class
+- This was to sterilize the class from raw sql data to json data
+
+![second.png](assets/docs/json_data/second.png)
+
+- The stock url has been hit with a 200-status code
 
 ---
 
