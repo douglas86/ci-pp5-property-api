@@ -176,6 +176,7 @@ CORS_ALLOW_HEADERS = [
     "x-csrftoken",
     "sessionid",
     "refresh",
+    "access",
     "x-requested-with",
 ]
 
