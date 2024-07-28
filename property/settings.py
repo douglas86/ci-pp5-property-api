@@ -99,8 +99,8 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
-    'TOKEN_LIFETIME': timedelta(days=1),
-    'TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+    'TOKEN_LIFETIME': timedelta(days=7),
+    'TOKEN_REFRESH_LIFETIME': timedelta(days=7),
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
 }
