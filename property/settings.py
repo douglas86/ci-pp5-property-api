@@ -136,7 +136,8 @@ else:
 
 if 'CLIENT_ORIGIN' in os.environ:
     CORS_ALLOWED_ORIGINS = [
-        os.environ.get('CLIENT_ORIGIN')
+        os.environ.get('DJANGO_CLIENT_ORIGIN_LOCALHOST'),
+        os.environ.get('DJANGO_CLIENT_ORIGIN_HEROKU')
     ]
 else:
     CORS_ALLOWED_ORIGIN_REGEXES = [
