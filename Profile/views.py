@@ -38,11 +38,11 @@ class ProfileByIdView(ViewSet):
 
     model = Profile
 
-    # serializer_class = ProfileSerializer
+    serializer_class = ProfileSerializer
 
-    # authentication_classes = [TokenAuthentication, SessionAuthentication]
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
 
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def retrieve(self, request, pk=None):
         print("pk", type(pk))
