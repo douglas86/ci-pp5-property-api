@@ -77,7 +77,7 @@ class ProfileListView(ViewSet):
     """
 
     model = Profile
-    permission_classes = [IsAuthenticated, IsSuperUser]
+    permission_classes = [IsAuthenticated]
     authentication_classes = [TokenAuthentication, SessionAuthentication]
 
     message = 'You have successfully fetched data from database'
