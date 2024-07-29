@@ -39,9 +39,11 @@ class ProfileByIdView(ViewSet):
     model = Profile
     serializer_class = ProfileSerializer
     authentication_classes = [TokenAuthentication, SessionAuthentication]
-    permission_classes = [IsAuthenticated]
+
+    # permission_classes = [IsAuthenticated]
 
     def retrieve(self, request, pk=None):
+        print("pk", type(pk))
         profile = AsyncViewSet(self.model.objects.filter(user_id=pk)).retrieve()
         serializer = self.serializer_class(instance=profile, many=True, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
