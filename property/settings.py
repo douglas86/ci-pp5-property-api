@@ -153,8 +153,8 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:3000',
-    "https://ci-pps-property-react-e3272eaff8d9.herokuapp.com"
+    'http://localhost:3000/',
+    "https://ci-pps-property-react-e3272eaff8d9.herokuapp.com/"
 ]
 
 CORS_ALLOW_METHODS = [
