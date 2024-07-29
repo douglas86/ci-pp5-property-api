@@ -37,7 +37,8 @@ class ProfileByIdView(ViewSet):
     """
 
     model = Profile
-    serializer_class = ProfileSerializer
+
+    # serializer_class = ProfileSerializer
 
     # authentication_classes = [TokenAuthentication, SessionAuthentication]
 
