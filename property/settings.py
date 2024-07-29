@@ -179,6 +179,7 @@ CORS_ALLOW_HEADERS = [
     "access",
     "x-requested-with",
     "credentials",
+    "x-refresh-token",
 ]
 
 ROOT_URLCONF = 'property.urls'
