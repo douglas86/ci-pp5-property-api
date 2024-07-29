@@ -46,7 +46,7 @@ class ProfileByIdView(ViewSet):
 
     def retrieve(self, request, pk=None):
         print("pk", type(pk))
-        profile = AsyncViewSet(self.model.objects.filter(user_id=pk)).retrieve()
+        profile = self.model.objects.filter(user_id=pk)
         serializer = self.serializer_class(instance=profile, many=True, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
