@@ -38,7 +38,8 @@ class ProfileByIdView(ViewSet):
 
     model = Profile
     serializer_class = ProfileSerializer
-    authentication_classes = [TokenAuthentication, SessionAuthentication]
+
+    # authentication_classes = [TokenAuthentication, SessionAuthentication]
 
     # permission_classes = [IsAuthenticated]
 
