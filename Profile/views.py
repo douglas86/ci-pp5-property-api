@@ -42,7 +42,7 @@ class ProfileByIdView(ViewSet):
 
     authentication_classes = [TokenAuthentication, SessionAuthentication]
 
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def retrieve(self, request, pk=None):
         print("pk", type(pk))
