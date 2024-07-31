@@ -37,12 +37,16 @@ class ProfileByIdView(ViewSet):
     """
 
     model = Profile
+
     serializer_class = ProfileSerializer
+
     authentication_classes = [TokenAuthentication, SessionAuthentication]
-    permission_classes = [IsAuthenticated]
+
+    # permission_classes = [IsAuthenticated]
 
     def retrieve(self, request, pk=None):
-        profile = AsyncViewSet(self.model.objects.filter(user_id=pk)).retrieve()
+        print("pk", type(pk))
+        profile = self.model.objects.filter(user_id=pk)
         serializer = self.serializer_class(instance=profile, many=True, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -77,7 +81,7 @@ class ProfileListView(ViewSet):
     """
 
     model = Profile
-    permission_classes = [IsAuthenticated, IsSuperUser]
+    permission_classes = [IsAuthenticated]
     authentication_classes = [TokenAuthentication, SessionAuthentication]
 
     message = 'You have successfully fetched data from database'

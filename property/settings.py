@@ -99,8 +99,8 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
-    'TOKEN_LIFETIME': timedelta(days=1),
-    'TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+    'TOKEN_LIFETIME': timedelta(days=7),
+    'TOKEN_REFRESH_LIFETIME': timedelta(days=7),
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
 }
@@ -131,24 +131,30 @@ else:
     ]
     CORS_ALLOWED_ORIGIN_REGEXES = [
         "http://localhost:3000",
-        "https://ci-pps-property-react-e3272eaff8d9.herokuapp.com",
+        "https://ci-pp5-property-react-1c4b35a4e2b5.herokuapp.com",
     ]
 
-if 'CLIENT_ORIGIN' in os.environ:
-    CORS_ALLOWED_ORIGINS = [
-        os.environ.get('CLIENT_ORIGIN')
-    ]
-else:
-    CORS_ALLOWED_ORIGIN_REGEXES = [
-        "http://localhost:3000",
-        "https://ci-pps-property-react-e3272eaff8d9.herokuapp.com"
-    ]
+CORS_ALLOWED_ORIGINS = [
+    os.environ.get('DJANGO_CLIENT_ORIGIN_LOCALHOST'),
+    os.environ.get('DJANGO_CLIENT_ORIGIN_HEROKU')
+]
+
+# if 'CLIENT_ORIGIN' in os.environ:
+#     CORS_ALLOWED_ORIGINS = [
+#         os.environ.get('DJANGO_CLIENT_ORIGIN_LOCALHOST'),
+#         os.environ.get('DJANGO_CLIENT_ORIGIN_HEROKU')
+#     ]
+# else:
+#     CORS_ALLOWED_ORIGIN_REGEXES = [
+#         "http://localhost:3000",
+#         "https://ci-pps-property-react-e3272eaff8d9.herokuapp.com"
+#     ]
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:3000',
-    "https://ci-pps-property-react-e3272eaff8d9.herokuapp.com"
+    "http://localhost:3000",
+    "https://ci-pp5-property-react-1c4b35a4e2b5.herokuapp.com"
 ]
 
 CORS_ALLOW_METHODS = [
@@ -170,7 +176,10 @@ CORS_ALLOW_HEADERS = [
     "x-csrftoken",
     "sessionid",
     "refresh",
+    "access",
     "x-requested-with",
+    "credentials",
+    "x-refresh-token",
 ]
 
 ROOT_URLCONF = 'property.urls'
