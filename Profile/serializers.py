@@ -16,7 +16,7 @@ class ProfileSerializer(Serializer):
     user = serializers.ReadOnlyField(source='user.username')
     user_id = serializers.ReadOnlyField(source='user.id')
     profile_picture = serializers.SerializerMethodField()
-    # role = serializers.SerializerMethodField()
+    role = serializers.SerializerMethodField()
     created_at = serializers.ReadOnlyField()
     updated_at = serializers.ReadOnlyField()
 
@@ -32,17 +32,17 @@ class ProfileSerializer(Serializer):
 
         return obj.profile_picture.url
 
-    # def get_role(self, obj):
-    #     """
-    #     Returns the role of a user if it is a superuser or not
-    #     :param obj:
-    #     :return:
-    #     """
-    #
-    #     if obj.user.is_superuser:
-    #         return "admin"
-    #     else:
-    #         return obj.role
+    def get_role(self, obj):
+        """
+        Returns the role of a user if it is a superuser or not
+        :param obj:
+        :return:
+        """
+
+        if obj.user.is_superuser:
+            return "admin"
+        else:
+            return obj.role
 
 
 class ChangePasswordSerializer(Serializer):
