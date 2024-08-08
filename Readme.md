@@ -6,14 +6,15 @@
 
 ---
 
-## Description
+## Descriptions
 
-This forms part of my fifth project with code institute.
+- This is the second stage of my property website
+- This repository is responsible for the database
+- It will be responsible for Registering, login, logout
 
-This API is used to store and retrieve data from the database, as well as Register, login or logout users.
-This app is designed to help solve the Property Market problem.
-You can buy, rent, submit complaints or report maintenance issues.
-You will also be able to see what maintenance contractor has been assigned to your maintenance issue.
+![img.png](assets/docs/description/img.png)
+
+Live site [here](https://ci-pp5-property-api-958077e8a5b4.herokuapp.com/)
 
 ---
 
@@ -39,6 +40,7 @@ You will also be able to see what maintenance contractor has been assigned to yo
     - [User Stories using MOSCOW Prioritization techniques](#user-stories-using-moscow-prioritization-techniques)
     - [A Proper Description of the Technologies used in this API](#a-proper-description-of-the-technologies-used-in-the-api)
     - [Description of how the code is organized](#description-of-how-the-code-is-organized)
+- [How to install this project](#how-to-install-this-project)
 - [Features](#features)
   - [async/await](#asyncawait) 
 - [Testing](#testing)
@@ -76,6 +78,41 @@ ___
 - Heroku was used as my cloud provider
 
 #### [Description of how the code is organized](#table-of-content)
+
+---
+
+### [How to install this project](#table-of-content)
+
+Locally
+
+- when using ssh
+- git clone git@github.com:douglas86/ci-pp5-property-api.git
+- when using http
+- git clone https://github.com/douglas86/ci-pp5-property-api.git
+- make sure to have a look at the runtime.txt file to see what version of python I am using
+- then create a virtual environment with that python version
+- to see if a virtual environment has been created, the words venv in brackets appear in the terminal
+- as I am using pycharm, the virtual environment will start automatically when I start my IDE
+- then install all the packages needed for this project using the following command
+- pip install -r requirements.txt
+- to start the Django server, run the following command
+- create an env.py file this is used to store all environment variables
+- create the variable needs for this project see the image below
+- placing the name of the variables in the empty quotation marks
+- make sure to set DJANGO_DEBUG = True when in local development
+- django secret keys should never be committed to GitHub
+- so if you need one, follow the following link
+- [generate a new secret key](https://www.makeuseof.com/django-secret-key-generate-new/#:~:text=You%20can%20accidentally%20make%20your,are%20still%20learning%20about%20GitHub.)
+- Then go to [elephantSQL](https://www.elephantsql.com/)
+- And create a new database instance to make sure that the version of PostgresSQL is greater than 12
+- Once created, then copy and paste the url in the env.py for the DATABASE_URL string
+- once that is done, then you can run the command below to run the server
+- python manage.py runserver
+- you can use ctrl + click on the server name that should open up a web browser at the correct port
+
+env.py
+
+![img.png](assets/docs/planning/img.png)
 
 ---
 
