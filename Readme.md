@@ -192,7 +192,7 @@ Testing if a user can log in
 Passing login test
 ![passing_login_test.png](assets/docs/testing/authentication/passing_login_test.png)
 
-If you try to login, but you are not registered
+If you try to log in, but you are not registered
 ![when_user_is_not_register_failing_test.png](assets/docs/testing/authentication/when_user_is_not_register_failing_test.png)
 
 Test if a user can log out
@@ -266,7 +266,7 @@ Test 3: If the logged-in user is an admin user
 
 #### Problem?
 
-- when I go to the heroku live link it doesn't want to display
+- when I go to the heroku live link, it doesn't want to display
 - data as JSON data
 
 ![problem1.png](assets/docs/heroku_app/problem1.png)
@@ -281,7 +281,7 @@ Test 3: If the logged-in user is an admin user
 
 ##### Problem?
 
-- I cant seem to create superuser from the terminal
+- I can't seem to create superuser from the terminal
 - Then register through postman
 
 ##### Solution?
@@ -295,15 +295,15 @@ Test 3: If the logged-in user is an admin user
 
 ##### Problem?
 
-- The data has not be serialized when fetching and sending data
+- The data has not been serialized when fetching and sending data
 
 ![first.png](assets/docs/json_data/first.png)
 
 ##### Solution?
 
 - The First thing was to change the view to async and await
-- The Second thing that needed to be done was add the Serializer class
-- This was to sterilize the class from raw sql data to json data
+- The Second thing that needed to be done was to add the Serializer class
+- This was to sterilize the class from raw SQL data to JSON data
 
 ![second.png](assets/docs/json_data/second.png)
 
@@ -312,5 +312,8 @@ Test 3: If the logged-in user is an admin user
 ---
 
 ### [Credits](#table-of-content)
+
+- [Code Institute](https://codeinstitute.net/) - Bootcamp
+- [Luke Buchanan](https://www.linkedin.com/in/lukebuchanan67/) - Mentor
 
 ---
