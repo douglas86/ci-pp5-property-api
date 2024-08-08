@@ -41,6 +41,9 @@ Live site [here](https://ci-pp5-property-api-958077e8a5b4.herokuapp.com/)
     - [A Proper Description of the Technologies used in this API](#a-proper-description-of-the-technologies-used-in-the-api)
     - [Description of how the code is organized](#description-of-how-the-code-is-organized)
 - [How to install this project](#how-to-install-this-project)
+  - [Installing locally](#installing-locally)
+  - [Setup on Heroku](#setup-on-heroku)
+  - [Technology Used](#technology-used)
 - [Features](#features)
   - [async/await](#asyncawait) 
 - [Testing](#testing)
@@ -83,7 +86,7 @@ ___
 
 ### [How to install this project](#table-of-content)
 
-Locally
+#### [Installing locally](#table-of-content)
 
 - when using ssh
 - git clone git@github.com:douglas86/ci-pp5-property-api.git
@@ -114,7 +117,7 @@ env.py
 
 ![img.png](assets/docs/planning/img.png)
 
-Heroku
+#### [Setup on Heroku](#table-of-content)
 
 - head over to [Heroku Dashboard](https://dashboard.heroku.com/apps)
 - create a new app and add all the environment variables to your config vars
@@ -127,6 +130,16 @@ Heroku
 - make sure to see if Heroku hasn't automatically added a build pack for PostgresSQL
 - if it has deleted it as this project is using elephantSQL instead
 - connect GitHub and the repo to Heroku and build the project
+
+#### [Technology Used](#table-of-content)
+
+- Python—programming language used in this project
+- Django Rest Framework - used to develop all api endpoints
+- Daphne - python package to give this project async/await capabilities
+- PostgresSQL - using elephantSQL for database
+- heroku - cloud deployment
+- GitHub—version control system
+- Pycharm - IDE for development
 
 ---
 
