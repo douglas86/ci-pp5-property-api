@@ -114,6 +114,20 @@ env.py
 
 ![img.png](assets/docs/planning/img.png)
 
+Heroku
+
+- head over to [Heroku Dashboard](https://dashboard.heroku.com/apps)
+- create a new app and add all the environment variables to your config vars
+- make sure to add DISABLE_COLLECT_STATIC with the value of 1
+- if this variable is not used, Heroku will spit out an error
+- change DJANGO_DEBUG with the value of False
+- make sure that there is a runtime.txt file
+- this will tell Heroku what version of python to use
+- make sure that requirements.txt is updated
+- make sure to see if Heroku hasn't automatically added a build pack for PostgresSQL
+- if it has deleted it as this project is using elephantSQL instead
+- connect GitHub and the repo to Heroku and build the project
+
 ---
 
 ### [Features](#table-of-content)
