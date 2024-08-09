@@ -154,6 +154,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
+    "https://ci-pp5-property-react-1c4b35a4e2b5.herokuapp.com"
 ]
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
