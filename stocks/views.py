@@ -16,8 +16,6 @@ class PropertyCreateView(ViewSet):
     Create a new property and store it in the database
     """
 
-    permission_classes = [IsAuthenticated]
-    authentication_classes = [TokenAuthentication, SessionAuthentication]
     serializer_class = StockSerializer
 
     message = 'You have successfully created a property.'
@@ -40,8 +38,6 @@ class StockListView(ViewSet):
     """
 
     model = Stocks
-    permission_classes = [IsAuthenticated]
-    authentication_classes = [TokenAuthentication, SessionAuthentication]
 
     message = "You have successfully fetched property data."
     error_message = "Something went wrong fetching property data."
@@ -61,8 +57,6 @@ class StockListView(ViewSet):
 class StockUpdateView(ViewSet):
     model = Stocks
     serializer_class = StockSerializer
-    permission_classes = [IsAuthenticated]
-    authentication_classes = [TokenAuthentication, SessionAuthentication]
 
     message = "You have successfully updated a property."
     error_message = "Something went wrong updating the property data."
@@ -91,8 +85,6 @@ class StockDeleteView(ViewSet):
 
     model = Stocks
     serializer_class = StockSerializer
-    permission_classes = [IsAuthenticated]
-    authentication_classes = [TokenAuthentication, SessionAuthentication]
 
     message = "You have successfully deleted a property."
     error_message = "Something went wrong deleting a property."
