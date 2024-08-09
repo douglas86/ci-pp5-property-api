@@ -39,12 +39,7 @@ class ProfileByIdView(ViewSet):
 
     serializer_class = ProfileSerializer
 
-    authentication_classes = [TokenAuthentication, SessionAuthentication]
-
-    # permission_classes = [IsAuthenticated]
-
     def retrieve(self, request, pk=None):
-        print("pk", type(pk))
         profile = self.model.objects.filter(user_id=pk)
         serializer = self.serializer_class(instance=profile, many=True, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -55,9 +50,6 @@ class ProfileDeleteView(ViewSet):
     Delete profile by id
     """
     model = Profile
-
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
 
     message = 'You have successfully deleted your profile!'
     error_message = 'Something went wrong, please try again.'
@@ -80,8 +72,6 @@ class ProfileListView(ViewSet):
     """
 
     model = Profile
-    # permission_classes = [IsAuthenticated]
-    # authentication_classes = [TokenAuthentication]
 
     message = 'You have successfully fetched data from database'
     error_message = 'There was an error fetching data from database'
@@ -96,7 +86,6 @@ class ProfileListView(ViewSet):
             return {'message': self.error_message, 'status': status.HTTP_404_NOT_FOUND}
 
     def retrieve(self, request):
-        print('request', request.user)
         return Response(self.get_profiles(request))
 
 
