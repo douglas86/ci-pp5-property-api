@@ -5,7 +5,7 @@ from .models import Stocks
 
 class StockSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
-    property_image = Base64ImageField(required=False)
+    # property_image = Base64ImageField(required=False)
     property_address = serializers.CharField()
     property_area = serializers.CharField()
     area_code = serializers.CharField()
@@ -13,4 +13,4 @@ class StockSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Stocks
-        fields = ['id', 'owner', 'property_image', 'property_address', 'property_area', 'area_code', 'rent']
+        fields = ['id', 'owner', 'property_address', 'property_area', 'area_code', 'rent']
