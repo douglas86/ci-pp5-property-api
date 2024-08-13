@@ -39,7 +39,7 @@ class TestUser(TestCase):
     def test_register(self):
         """
         Test if user can register user
-        Check if http status code is 201
+        Check if http status code is 201, 
         Meaning that the resources returned generated an access token and refresh token
         :return:
         """
