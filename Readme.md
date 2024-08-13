@@ -40,7 +40,7 @@ Live site [here](https://ci-pp5-property-api-958077e8a5b4.herokuapp.com/)
     - [User Stories using MOSCOW Prioritization techniques](#user-stories-using-moscow-prioritization-techniques)
     - [A Proper Description of the Technologies used in this API](#a-proper-description-of-the-technologies-used-in-the-api)
     - [Description of how the code is organized](#description-of-how-the-code-is-organized)
-- [How to install this project](#how-to-install-this-project)
+- [How to install this project - Deployment](#how-to-install-this-project---deployment)
   - [Installing locally](#installing-locally)
   - [Setup on Heroku](#setup-on-heroku)
   - [Technology Used](#technology-used)
@@ -84,7 +84,7 @@ ___
 
 ---
 
-### [How to install this project](#table-of-content)
+### [How to install this project - Deployment](#table-of-content)
 
 #### [Installing locally](#table-of-content)
 
