@@ -46,6 +46,7 @@ Live site [here](https://ci-pp5-property-api-958077e8a5b4.herokuapp.com/)
   - [Technology Used](#technology-used)
 - [Features](#features)
   - [async/await](#asyncawait) 
+  - [Add Protection to endpoints](#add-protection-to-endpoints)
 - [Testing](#testing)
   - [Auto Testing](#auto-testing)
     - [Authentication](#authentication)
@@ -158,6 +159,12 @@ How I got async/await right in this project
 - replacing it with ASGI_APPLICATION = "app_name.asgi.application"
 - then re-run the server
 - you are now setup for async/await functionality
+
+#### [Add Protection to endpoints](#features)
+
+- This is a feature that I have not quite been able to get right yet
+- I am wanting to work on this at a later stage
+- Where endpoints are protected based on the role in the organization
 
 ---
 
