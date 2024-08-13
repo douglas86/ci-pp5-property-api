@@ -22,11 +22,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from .views import HomeView
 from .settings import LOCALHOST
 
-# router = routers.DefaultRouter()
-# router.register("", HomeView, basename="property_list")
-
 urlpatterns = [
-    # path("", include(router.urls)),
     path("", HomeView.as_view({'get': 'list'}), name="home"),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),

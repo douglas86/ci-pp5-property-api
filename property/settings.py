@@ -48,8 +48,6 @@ LOCALHOST = os.environ.get('DJANGO_LOCALHOST')
 
 ALLOWED_HOSTS = ["*"]
 
-# Application definition
-
 INSTALLED_APPS = [
     'daphne',
     'django.contrib.admin',
@@ -138,17 +136,6 @@ CORS_ALLOWED_ORIGINS = [
     os.environ.get('DJANGO_CLIENT_ORIGIN_LOCALHOST'),
     os.environ.get('DJANGO_CLIENT_ORIGIN_HEROKU')
 ]
-
-# if 'CLIENT_ORIGIN' in os.environ:
-#     CORS_ALLOWED_ORIGINS = [
-#         os.environ.get('DJANGO_CLIENT_ORIGIN_LOCALHOST'),
-#         os.environ.get('DJANGO_CLIENT_ORIGIN_HEROKU')
-#     ]
-# else:
-#     CORS_ALLOWED_ORIGIN_REGEXES = [
-#         "http://localhost:3000",
-#         "https://ci-pps-property-react-e3272eaff8d9.herokuapp.com"
-#     ]
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True

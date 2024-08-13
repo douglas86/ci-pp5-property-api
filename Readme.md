@@ -40,12 +40,13 @@ Live site [here](https://ci-pp5-property-api-958077e8a5b4.herokuapp.com/)
     - [User Stories using MOSCOW Prioritization techniques](#user-stories-using-moscow-prioritization-techniques)
     - [A Proper Description of the Technologies used in this API](#a-proper-description-of-the-technologies-used-in-the-api)
     - [Description of how the code is organized](#description-of-how-the-code-is-organized)
-- [How to install this project](#how-to-install-this-project)
+- [How to install this project - Deployment](#how-to-install-this-project---deployment)
   - [Installing locally](#installing-locally)
   - [Setup on Heroku](#setup-on-heroku)
   - [Technology Used](#technology-used)
 - [Features](#features)
   - [async/await](#asyncawait) 
+  - [Add Protection to endpoints](#add-protection-to-endpoints)
 - [Testing](#testing)
   - [Auto Testing](#auto-testing)
     - [Authentication](#authentication)
@@ -84,7 +85,7 @@ ___
 
 ---
 
-### [How to install this project](#table-of-content)
+### [How to install this project - Deployment](#table-of-content)
 
 #### [Installing locally](#table-of-content)
 
@@ -158,6 +159,12 @@ How I got async/await right in this project
 - replacing it with ASGI_APPLICATION = "app_name.asgi.application"
 - then re-run the server
 - you are now setup for async/await functionality
+
+#### [Add Protection to endpoints](#features)
+
+- This is a feature that I have not quite been able to get right yet
+- I am wanting to work on this at a later stage
+- Where endpoints are protected based on the role in the organization
 
 ---
 

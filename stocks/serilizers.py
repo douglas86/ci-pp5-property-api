@@ -5,7 +5,6 @@ from .models import Stocks
 
 class StockSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
-    # property_image = Base64ImageField(required=False)
     property_address = serializers.CharField()
     property_area = serializers.CharField()
     area_code = serializers.CharField()

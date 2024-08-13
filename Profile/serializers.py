@@ -51,7 +51,6 @@ class ChangePasswordSerializer(Serializer):
     Taking in the old password and replacing it with new one.
     """
 
-    # These two serializers will show on the form
     username = serializers.CharField(required=True, allow_blank=False)
     old_password = serializers.CharField(required=True, allow_blank=False)
     new_password = serializers.CharField(required=True, allow_blank=False)
